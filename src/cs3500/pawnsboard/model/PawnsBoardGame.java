@@ -438,7 +438,6 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     board[row][col].playCard(getCurrentPlayerHand().get(handId));
     lastPassed = false;
     influenceBoard(row, col, card);
-    drawCard(getCurrentTurn());
     swapTurn();
   }
 
@@ -506,6 +505,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     } else {
       currentTurn = Player.RED;
     }
+    drawCard(getCurrentTurn());
   }
 
   private void influenceBoard(int row, int col, PawnsCard card) {

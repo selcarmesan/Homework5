@@ -2,9 +2,15 @@ package cs3500.pawnsboard.model;
 
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class CardReaderTest {
 
@@ -47,6 +53,23 @@ public class CardReaderTest {
     assertEquals(LoveInfluence(), card3.getInfluence());
   }
 
+  @Test
+  public void testCardReaderThrowsIfPlayerNull() {
+    assertThrows(IllegalArgumentException.class, () -> PawnsCardReader.readCards(null));
+  }
+
+  // Fix
+  @Test
+  public void testCardReaderThrowsIfCardSpotUnmarked() throws FileNotFoundException {
+    File file = new File("docs" + File.separator + "deck.config");
+  }
+
+  // Fix
+  @Test
+  public void testCardReaderThrowsIfFileFormattedIncorrectly() {
+    File file = new File("docs" + File.separator + "deck.config");
+  }
+
   private boolean[][] heartInfluence() {
     boolean[][] heart = new boolean[5][5];
     heart[0][1] = true;
@@ -78,6 +101,7 @@ public class CardReaderTest {
     I95[4][4] = true;
     return I95;
   }
+
   private boolean[][] I95InfluenceBlue() {
     boolean[][] I95 = new boolean[5][5];
     I95[0][2] = true;
