@@ -133,10 +133,14 @@ public class PawnsBoardTest {
 
   @Test
   public void testStartGameThrowsIfNotEnoughCardsForBoard() {
+    List<PawnsCard> smallRedCards = new ArrayList<>();
+    smallRedCards.add(PawnsCardReader.readCards(Player.RED).get(0));
+    List<PawnsCard> smallBlueCards = new ArrayList<>();
+    smallBlueCards.add(PawnsCardReader.readCards(Player.BLUE).get(0));
     assertThrows(IllegalArgumentException.class,
-        () -> board.startGame(PawnsCardReader.readCards(Player.RED), blueCards, 1, false));
+        () -> board.startGame(smallRedCards, blueCards, 1, false));
     assertThrows(IllegalArgumentException.class,
-        () -> board.startGame(redCards, PawnsCardReader.readCards(Player.BLUE), 1, false));
+        () -> board.startGame(redCards, smallBlueCards, 1, false));
   }
 
   @Test

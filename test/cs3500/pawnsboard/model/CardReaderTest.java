@@ -22,7 +22,7 @@ public class CardReaderTest {
     Card card1 = cards.get(0);
     Card card2 = cards.get(1);
     Card card3 = cards.get(2);
-    assertEquals("Evil_Smiler", card1.getName());
+    assertEquals("Smiler", card1.getName());
     assertEquals(3, card1.getCost());
     assertEquals(2, card1.getValue());
     assertEquals(Player.RED, card1.getColor());
@@ -33,7 +33,7 @@ public class CardReaderTest {
     assertEquals(Player.RED, card2.getColor());
     assertEquals(I95InfluenceRed(), card2.getInfluence());
     assertEquals("Love", card3.getName());
-    assertEquals(2, card3.getCost());
+    assertEquals(3, card3.getCost());
     assertEquals(3, card3.getValue());
     assertEquals(Player.RED, card3.getColor());
     assertEquals(LoveInfluence(), card3.getInfluence());
