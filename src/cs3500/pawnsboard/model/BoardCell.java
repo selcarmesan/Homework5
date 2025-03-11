@@ -48,6 +48,9 @@ public class BoardCell implements Cell<PawnsCard> {
    */
   @Override
   public PawnsCard getCard() {
+    if (!cardPlayed) {
+      return null;
+    }
     return new PawnsCard(card.getName(), card.getCost(),
             card.getValue(), card.getColor(), card.getInfluence());
   }
@@ -109,7 +112,7 @@ public class BoardCell implements Cell<PawnsCard> {
     if (pawns == 0) {
       throw new IllegalArgumentException("Cannot change ownership when cell is empty");
     }
-    if (newOwner == null && owner != null) {
+    if (newOwner == null) {
       throw new IllegalArgumentException("Cannot change ownership to null");
     }
     owner = newOwner;
@@ -125,7 +128,7 @@ public class BoardCell implements Cell<PawnsCard> {
   @Override
   public void playCard(PawnsCard card) {
     if (this.card != null) {
-      throw new IllegalArgumentException("Cannot play card on cell with a card");
+      throw new IllegalStateException("Cannot play card on cell with a card");
     }
     if (card == null) {
       throw new IllegalArgumentException("Cannot play null card");

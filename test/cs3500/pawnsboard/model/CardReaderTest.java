@@ -12,7 +12,7 @@ public class CardReaderTest {
 
   @Test
   public void testCardReaderReadsRed() {
-    List<Card> cards = PawnsCardReader.readCards(Player.RED);
+    List<PawnsCard> cards = PawnsCardReader.readCards(Player.RED);
     Card card1 = cards.get(0);
     Card card2 = cards.get(1);
     Card card3 = cards.get(2);
@@ -35,7 +35,7 @@ public class CardReaderTest {
 
   @Test
   public void testCardReaderReadsBlue() {
-    List<Card> cards = PawnsCardReader.readCards(Player.BLUE);
+    List<PawnsCard> cards = PawnsCardReader.readCards(Player.BLUE);
     Card card1 = cards.get(0);
     Card card2 = cards.get(1);
     Card card3 = cards.get(2);

@@ -55,6 +55,18 @@ public interface PawnsBoard<C extends Card, B extends Cell> {
   void startGame(int handSize, boolean randomDraw);
 
   /**
+   * Returns the number of rows on the board.
+   * @return the rows
+   */
+  int getRows();
+
+  /**
+   * Returns the number of columns on the board.
+   * @return the columns
+   */
+  int getCols();
+
+  /**
    * Returns the current score of the specified player.
    *
    * @param player the player whose score is returned
@@ -118,6 +130,7 @@ public interface PawnsBoard<C extends Card, B extends Cell> {
    *
    * @return the winning player
    * @throws IllegalStateException if game is not in progress
+   *                               if game is not over
    */
   Player getWinner();
 

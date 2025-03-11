@@ -23,8 +23,8 @@ public class PawnsCardReader {
    *
    * @param playerDeck the player for which to make the deck
    * @return the constructed deck
-   * @throws IllegalStateException if some error reading file or format is incorrect.
    * @throws IllegalArgumentException if player deck is null
+   *                                  if some error reading file or format is incorrect
    */
   public static List<PawnsCard> readCards(Player playerDeck) {
     if (playerDeck == null) {
@@ -57,7 +57,7 @@ public class PawnsCardReader {
       }
       return cards;
     } catch (IOException | NoSuchElementException e) {
-      throw new IllegalStateException("Error reading config file, fix format and try again");
+      throw new IllegalArgumentException("Error reading config file, fix format and try again");
     }
   }
 }

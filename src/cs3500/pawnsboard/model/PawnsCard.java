@@ -45,7 +45,10 @@ public class PawnsCard implements Card {
     this.cost = cost;
     this.value = value;
     this.color = color;
-    this.influence = influence;
+    this.influence = new boolean[5][5];
+    for (int i = 0; i < 5; i++) {
+      System.arraycopy(influence[i], 0, this.influence[i], 0, 5);
+    }
   }
 
   /**

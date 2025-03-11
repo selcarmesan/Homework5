@@ -1,4 +1,5 @@
 package cs3500.pawnsboard.model;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,8 +37,10 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   //</editor-fold>
 
   //<editor-fold desc="Constructors">
+
   /**
    * Creates a new pawns board game with a random seed.
+   *
    * @param rows number of rows
    * @param cols number of columns
    * @throws IllegalArgumentException if rows or columns is not positive
@@ -57,6 +60,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
 
   /**
    * Creates a new pawns board game using the given random as a seed.
+   *
    * @param rows number of rows
    * @param cols number of columns
    * @param rand random used for drawing new cards
@@ -81,6 +85,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   //</editor-fold>
 
   //<editor-fold desc="Game Starters">
+
   /**
    * Initializes a new game of pawns board.  Both players are supplied their own decks containing
    * playing cards of their color, and dealt an equal amount of cards into their starting hand.
@@ -98,7 +103,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
    *                                  if either deck contains fewer cards than the number of cells
    *                                  if there are more than 2 copies of the same card in one deck
    *                                  if hand size is greater than a third of either deck size
-   * @throws IllegalStateException if game is already in progress
+   * @throws IllegalStateException    if game is already in progress
    */
   @Override
   public void startGame(List<PawnsCard> redDeck, List<PawnsCard> blueDeck, int handSize, boolean randomDraw) {
@@ -128,9 +133,20 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
       }
     }
     assertDeckValidity(redDeck, blueDeck, handSize);
-    this.redDeck = new ArrayList<>(redDeck);
-    this.blueDeck = new ArrayList<>(blueDeck);
-    setupGame(handSize, randomDraw);
+    List<PawnsCard> newRedDeck = new ArrayList<>();
+    List<PawnsCard> newBlueDeck = new ArrayList<>();
+    for (PawnsCard card : redDeck) {
+      newRedDeck.add(new PawnsCard(card.getName(), card.getCost(), card.getValue(),
+              card.getColor(), card.getInfluence()));
+    }
+    for (PawnsCard card : blueDeck) {
+      newBlueDeck.add(new PawnsCard(card.getName(), card.getCost(), card.getValue(),
+              card.getColor(), card.getInfluence()));
+    }
+    this.redDeck = newRedDeck;
+    this.blueDeck = newBlueDeck;
+    this.randomDraw = randomDraw;
+    setupGame(handSize);
   }
 
   /**
@@ -154,47 +170,24 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     if (gameStarted) {
       throw new IllegalStateException("Game already started");
     }
-    try {
-      redDeck = PawnsCardReader.readCards(Player.RED);
-      blueDeck = PawnsCardReader.readCards(Player.BLUE);
-    } catch (IllegalStateException e) {
-      throw new IllegalArgumentException("Error reading cards, reformat and try again");
-    }
-    if (redDeck.stream().anyMatch(Objects::isNull) || blueDeck.stream().anyMatch(Objects::isNull)) {
-      throw new IllegalArgumentException("Decks cannot contain null");
-    }
-    for (Card card : redDeck) {
-      if (card.getColor() != Player.RED) {
-        throw new IllegalArgumentException("Red decks can only contain red cards");
-      }
-      if (Collections.frequency(redDeck, card) > 2) {
-        throw new IllegalArgumentException("Decks cannot contain more than 2 of the same card");
-      }
-    }
-    for (Card card : blueDeck) {
-      if (card.getColor() != Player.BLUE) {
-        throw new IllegalArgumentException("Blue decks can only contain blue cards");
-      }
-      if (Collections.frequency(blueDeck, card) > 2) {
-        throw new IllegalArgumentException("Decks cannot contain more than 2 of the same card");
-      }
-    }
-    assertDeckValidity(redDeck, blueDeck, handSize);
-    setupGame(handSize, randomDraw);
+    redDeck = PawnsCardReader.readCards(Player.RED);
+    blueDeck = PawnsCardReader.readCards(Player.BLUE);
+    startGame(redDeck, blueDeck, handSize, randomDraw);
   }
 
-  private void setupGame(int handSize, boolean randomDraw) {
+  private void setupGame(int handSize) {
     this.redHand = new ArrayList<>();
     this.blueHand = new ArrayList<>();
     for (int i = 0; i < handSize; i++) {
-      this.redHand.add(redDeck.get(0));
+      drawCard(Player.RED);
     }
     for (int i = 0; i < handSize; i++) {
-      this.blueHand.add(blueDeck.get(0));
+      drawCard(Player.BLUE);
     }
     board = new BoardCell[rows][cols];
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
+        board[i][j] = new BoardCell();
         if (j == 0) {
           BoardCell cell = new BoardCell();
           cell.addPawn(Player.RED);
@@ -205,17 +198,15 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
           cell.addPawn(Player.BLUE);
           board[i][j] = cell;
         }
-        board[i][j] = new BoardCell();
       }
     }
-    this.randomDraw = randomDraw;
     currentTurn = Player.RED;
     gameStarted = true;
     gameOver = false;
   }
 
   private void assertDeckValidity(List<PawnsCard> redDeck, List<PawnsCard> blueDeck, int handSize) {
-    if (handSize < 1 || handSize > redDeck.size() / 3 || handSize > blueDeck.size() / 3) {
+    if (handSize < 1 || handSize > Math.max(redDeck.size(), blueDeck.size()) / 3) {
       throw new IllegalArgumentException("Hand must be positive and less than a third of the deck");
     }
     if (redDeck.size() < getNumCells() || blueDeck.size() < getNumCells()) {
@@ -225,6 +216,25 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   //</editor-fold>
 
   //<editor-fold desc="Getters">
+
+  /**
+   * Returns the number of rows on the board.
+   *
+   * @return the rows
+   */
+  public int getRows() {
+    return rows;
+  }
+
+  /**
+   * Returns the number of columns on the board.
+   *
+   * @return the columns
+   */
+  public int getCols() {
+    return cols;
+  }
+
   /**
    * Returns the current score of the specified player.
    *
@@ -261,7 +271,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
    *
    * @param player the player whose hand is returned
    * @return the player's hand
-   * @throws IllegalStateException if game is not in progress
+   * @throws IllegalStateException    if game is not in progress
    * @throws IllegalArgumentException if player is null
    */
   @Override
@@ -269,14 +279,22 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     if (!gameStarted) {
       throw new IllegalStateException("Game not started");
     }
-    switch (player) {
-      case RED:
-        return new ArrayList<>(redHand);
-      case BLUE:
-        return new ArrayList<>(blueHand);
-      default:
-        throw new IllegalArgumentException("Invalid player");
+    if (player == null) {
+      throw new IllegalArgumentException("Player cannot be null");
     }
+    List<PawnsCard> hand = new ArrayList<>();
+    if (player == Player.RED) {
+      for (PawnsCard card : redHand) {
+        hand.add(new PawnsCard(card.getName(), card.getCost(),
+                card.getValue(), card.getColor(), card.getInfluence()));
+      }
+    } else {
+      for (PawnsCard card : blueHand) {
+        hand.add(new PawnsCard(card.getName(), card.getCost(),
+                card.getValue(), card.getColor(), card.getInfluence()));
+      }
+    }
+    return hand;
   }
 
   /**
@@ -303,6 +321,9 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   public Player getWinner() {
     if (!gameStarted) {
       throw new IllegalStateException("Game not started");
+    }
+    if (!isGameOver()) {
+      throw new IllegalStateException("Can only determine winner after game");
     }
     int redScore = getScore(Player.RED);
     int blueScore = getScore(Player.BLUE);
@@ -382,6 +403,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   //</editor-fold>
 
   //<editor-fold desc="Turn Options">
+
   /**
    * Influences the given board starting at the specified row and column.  Each card reaches at
    * most 2 in any direction from the starting space, while the specifics vary by card.
@@ -395,7 +417,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
    * @throws IllegalArgumentException hand ID is invalid
    *                                  if desired cell already has a card
    *                                  if desired cell does not have enough owned pawns for the cost
-   * @throws IllegalStateException if game is not in progress
+   * @throws IllegalStateException    if game is not in progress
    */
   @Override
   public void placeCard(int row, int col, int handId) {
@@ -416,7 +438,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     board[row][col].playCard(getCurrentPlayerHand().get(handId));
     lastPassed = false;
     influenceBoard(row, col, card);
-    drawCard();
+    drawCard(getCurrentTurn());
     swapTurn();
   }
 
@@ -447,14 +469,13 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     return rows * cols;
   }
 
-  private void drawCard() {
-    Player turn = getCurrentTurn();
-    if (turn == Player.RED) {
+  private void drawCard(Player deck) {
+    if (deck == Player.RED) {
       if (redDeck.isEmpty()) {
         return;
       }
       if (randomDraw) {
-        redHand.add(redDeck.get(rand.nextInt() % redDeck.size()));
+        redHand.add(redDeck.get(rand.nextInt(redDeck.size())));
       } else {
         redHand.add(redDeck.get(0));
       }
@@ -463,7 +484,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
         return;
       }
       if (randomDraw) {
-        blueHand.add(blueDeck.get(rand.nextInt() % blueDeck.size()));
+        blueHand.add(blueDeck.get(rand.nextInt(blueDeck.size())));
       } else {
         blueHand.add(blueDeck.get(0));
       }
@@ -501,17 +522,15 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   }
 
   private void influenceCell(BoardCell cell, Player player) {
-    if (cell.getCard() != null) {
-      if (cell.getPawns() > 0) {
-        if (cell.getOwner() != player) {
-          if (cell.getOwner() == null) {
-            cell.addPawn(player);
-          } else {
-            cell.changeOwner(player);
-          }
+    if (cell.getCard() == null) {
+      if (cell.getOwner() != player) {
+        if (cell.getOwner() == null) {
+          cell.addPawn(player);
         } else {
-          cell.addPawn();
+          cell.changeOwner(player);
         }
+      } else {
+        cell.addPawn();
       }
     }
   }
