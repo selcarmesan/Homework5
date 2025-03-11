@@ -377,13 +377,17 @@ public class PawnsBoardTest {
     board.startGame(redCards, blueCards, 1, false);
     board.placeCard(0, 0, 0);
     board.skipTurn();
-    System.out.println(board.getCellAt(0, 0).getPawns());
     assertThrows(IllegalArgumentException.class, () -> board.placeCard(0, 0, 0));
   }
 
   @Test
   public void testCardOnlyDrawAfterFirstTurnForBoth() {
-    assertTrue(false);
+    board.startGame(redCards, blueCards, 1, false);
+    assertEquals(1, board.getHand(Player.RED).size());
+    board.skipTurn();
+    assertEquals(1, board.getHand(Player.BLUE).size());
+    board.skipTurn();
+    assertEquals(2, board.getHand(Player.RED).size());
   }
 
   @Test
