@@ -1,6 +1,8 @@
 This codebase functions as a playable game and view for a card game called Pawns Board.
 
-CODE SNIPPET
+To use this code, run the main file, or alternatively create a new PawnsBoardGame(rows, cols),
+and startGame() using either the method that takes in lists for the decks, or the one that
+automatically reads them from the config file
 
 This game consists of two major portions, the model and view.  The model acts as the design for
 the game itself, as well as the components of it, being the players available, red & blue, the
@@ -28,4 +30,6 @@ per row, and the player with the higher score cancels out all the opposing playe
 in that row.
 
 All objects related to the model of the game can be found within the model package, along with
-the
+the object that reads out the cards from the config file and converts them to a list.
+The view package contains the available view for the model, a textual representation.
+The docs folder contains the deck config file.
