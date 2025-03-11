@@ -183,6 +183,24 @@ public class PawnsBoardTest {
   }
 
   @Test
+  public void testGetScoreRowThrowsGameNotStarted() {
+    assertThrows(IllegalStateException.class, () -> board.getScore(Player.RED, 0));
+  }
+
+  @Test
+  public void testGetScoreThrowsNullPlayer() {
+    board.startGame(redCards, blueCards, 1, false);
+    assertThrows(IllegalArgumentException.class, () -> board.getScore(null));
+  }
+
+  @Test
+  public void testGetScoreThrowsRowInvalid() {
+    board.startGame(redCards, blueCards, 1, false);
+    assertThrows(IllegalArgumentException.class, () -> board.getScore(Player.RED, -1));
+    assertThrows(IllegalArgumentException.class, () -> board.getScore(Player.RED, 5));
+  }
+
+  @Test
   public void testGetScoreCancelsOtherPlayerWithinRow() {
     redCards.add(0, new PawnsCard("test", 1, 3,
             Player.RED, new boolean[5][5]));
@@ -358,8 +376,14 @@ public class PawnsBoardTest {
   public void testPlaceCardThrowsCellAlreadyOccupied() {
     board.startGame(redCards, blueCards, 1, false);
     board.placeCard(0, 0, 0);
-    board.placeCard(0, 2, 0);
+    board.skipTurn();
+    System.out.println(board.getCellAt(0, 0).getPawns());
     assertThrows(IllegalArgumentException.class, () -> board.placeCard(0, 0, 0));
+  }
+
+  @Test
+  public void testCardOnlyDrawAfterFirstTurnForBoth() {
+    assertTrue(false);
   }
 
   @Test

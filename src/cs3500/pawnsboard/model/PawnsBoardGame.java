@@ -34,6 +34,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   private List<PawnsCard> blueHand;
   private Player currentTurn;
   private boolean lastPassed = false;
+  private boolean firstTurnOver = false;
   //</editor-fold>
 
   //<editor-fold desc="Constructors">
@@ -241,6 +242,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
    * @param player the player whose score is returned
    * @return the player's score
    * @throws IllegalStateException if game is not in progress
+   * @throws IllegalArgumentException if player is null
    */
   @Override
   public int getScore(Player player) {
@@ -261,12 +263,16 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
    * @param row the row to score
    * @return the player's score
    * @throws IllegalStateException if game is not in progress
-   *                               if row is out of bounds
+   * @throws IllegalArgumentException if row is out of bounds
+   *                                  if player is null
    */
   @Override
   public int getScore(Player player, int row) {
     if (!gameStarted) {
       throw new IllegalStateException("Game not started");
+    }
+    if (player == null) {
+      throw new IllegalArgumentException("Player cannot be null");
     }
     if (!locationValid(row, 0)) {
       throw new IllegalArgumentException("Row invalid");
@@ -436,7 +442,6 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
    * @param col    the starting cell's column
    * @param handId the index of the card in the player's hand
    * @throws IllegalArgumentException hand ID is invalid
-   *                                  if desired cell already has a card
    *                                  if desired cell does not have enough owned pawns for the cost
    *                                  if desired cell has pawns that do not belong to the player
    * @throws IllegalStateException    if game is not in progress
@@ -454,11 +459,8 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     }
     PawnsCard card = getHand(getCurrentTurn()).get(handId);
     BoardCell cell = getCellAt(row, col);
-    if (card.getCost() > cell.getPawns() ||cell.getOwner() != getCurrentTurn()) {
+    if (card.getCost() > cell.getPawns() || cell.getOwner() != getCurrentTurn()) {
       throw new IllegalArgumentException("Not enough owned pawns to play card");
-    }
-    if (cell.getCard() != null) {
-      throw new IllegalArgumentException("Can't place card in occupied cell");
     }
     board[row][col].playCard(getCurrentPlayerHand().get(handId));
     lastPassed = false;
@@ -530,7 +532,10 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     } else {
       currentTurn = Player.RED;
     }
-    drawCard(getCurrentTurn());
+    if (firstTurnOver) {
+      drawCard(getCurrentTurn());
+    }
+    firstTurnOver = true;
   }
 
   private void influenceBoard(int row, int col, PawnsCard card) {

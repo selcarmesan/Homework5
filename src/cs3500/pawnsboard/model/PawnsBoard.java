@@ -72,6 +72,7 @@ public interface PawnsBoard<C extends Card, B extends Cell> {
    * @param player the player whose score is returned
    * @return the player's score
    * @throws IllegalStateException if game is not in progress
+   * @throws IllegalArgumentException if player is null
    */
   int getScore(Player player);
 
@@ -82,7 +83,8 @@ public interface PawnsBoard<C extends Card, B extends Cell> {
    * @param row the row to score
    * @return the player's score
    * @throws IllegalStateException if game is not in progress
-   *                               if row is out of bounds
+   * @throws IllegalArgumentException if row is out of bounds
+   *                                  if player is null
    */
   public int getScore(Player player, int row);
 
@@ -107,7 +109,6 @@ public interface PawnsBoard<C extends Card, B extends Cell> {
    * @param col the starting cell's column
    * @param handId the index of the card in the player's hand
    * @throws IllegalArgumentException if hand ID is invalid
-   *                                  if desired cell already has a card
    *                                  if desired cell does not have enough owned pawns for the cost
    *                                  if desired cell has pawns that do not belong to the player
    * @throws IllegalStateException if game is not in progress
