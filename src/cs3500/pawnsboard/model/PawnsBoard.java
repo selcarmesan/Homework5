@@ -76,6 +76,17 @@ public interface PawnsBoard<C extends Card, B extends Cell> {
   int getScore(Player player);
 
   /**
+   * Returns the current score of the specified player in the particular row.
+   *
+   * @param player the player whose score is returned
+   * @param row the row to score
+   * @return the player's score
+   * @throws IllegalStateException if game is not in progress
+   *                               if row is out of bounds
+   */
+  public int getScore(Player player, int row);
+
+  /**
    * Returns the current hand of cards belonging to the specified player.
    *
    * @param player the player whose hand is returned

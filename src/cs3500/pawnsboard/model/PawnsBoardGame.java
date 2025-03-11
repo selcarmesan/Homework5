@@ -249,19 +249,41 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     }
     int score = 0;
     for (int i = 0; i < rows; i++) {
-      int tempPlayer = 0;
-      int tempOpponent = 0;
-      for (int j = 0; j < cols; j++) {
-        Cell<PawnsCard> cell = getCellAt(i, j);
-        if (cell.getOwner() == player && cell.getCard() != null) {
-          tempPlayer += cell.getCard().getValue();
-        } else if (cell.getOwner() != player && cell.getCard() != null) {
-          tempOpponent += cell.getCard().getValue();
-        }
+      score += getScore(player, i);
+    }
+    return score;
+  }
+
+  /**
+   * Returns the current score of the specified player in the particular row.
+   *
+   * @param player the player whose score is returned
+   * @param row the row to score
+   * @return the player's score
+   * @throws IllegalStateException if game is not in progress
+   *                               if row is out of bounds
+   */
+  @Override
+  public int getScore(Player player, int row) {
+    if (!gameStarted) {
+      throw new IllegalStateException("Game not started");
+    }
+    if (!locationValid(row, 0)) {
+      throw new IllegalArgumentException("Row invalid");
+    }
+    int score = 0;
+    int tempPlayer = 0;
+    int tempOpponent = 0;
+    for (int j = 0; j < cols; j++) {
+      Cell<PawnsCard> cell = getCellAt(row, j);
+      if (cell.getOwner() == player && cell.getCard() != null) {
+        tempPlayer += cell.getCard().getValue();
+      } else if (cell.getOwner() != player && cell.getCard() != null) {
+        tempOpponent += cell.getCard().getValue();
       }
-      if (tempPlayer > tempOpponent) {
-        score += tempPlayer;
-      }
+    }
+    if (tempPlayer > tempOpponent) {
+      score += tempPlayer;
     }
     return score;
   }

@@ -28,4 +28,4 @@ per row, and the player with the higher score cancels out all the opposing playe
 in that row.
 
 All objects related to the model of the game can be found within the model package, along with
-the 
+the
