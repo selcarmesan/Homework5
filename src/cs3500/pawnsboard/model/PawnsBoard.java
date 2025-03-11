@@ -98,6 +98,7 @@ public interface PawnsBoard<C extends Card, B extends Cell> {
    * @throws IllegalArgumentException if hand ID is invalid
    *                                  if desired cell already has a card
    *                                  if desired cell does not have enough owned pawns for the cost
+   *                                  if desired cell has pawns that do not belong to the player
    * @throws IllegalStateException if game is not in progress
    */
   void placeCard(int row, int col, int handId);

@@ -2,19 +2,14 @@ package cs3500.pawnsboard.model;
 
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 public class CardReaderTest {
-
-  // DO MORE TESTING THIS WAS JSUT TO CHECK IT WORKED BUT DO MORE!!!!! RAGHHHHHH
 
   @Test
   public void testCardReaderReadsRed() {

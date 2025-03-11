@@ -37,7 +37,6 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   //</editor-fold>
 
   //<editor-fold desc="Constructors">
-
   /**
    * Creates a new pawns board game with a random seed.
    *
@@ -106,7 +105,8 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
    * @throws IllegalStateException    if game is already in progress
    */
   @Override
-  public void startGame(List<PawnsCard> redDeck, List<PawnsCard> blueDeck, int handSize, boolean randomDraw) {
+  public void startGame(List<PawnsCard> redDeck, List<PawnsCard> blueDeck,
+                        int handSize, boolean randomDraw) {
     if (gameStarted) {
       throw new IllegalStateException("Game already started");
     }
@@ -334,7 +334,6 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     } else {
       return null;
     }
-
   }
 
   /**
@@ -417,6 +416,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
    * @throws IllegalArgumentException hand ID is invalid
    *                                  if desired cell already has a card
    *                                  if desired cell does not have enough owned pawns for the cost
+   *                                  if desired cell has pawns that do not belong to the player
    * @throws IllegalStateException    if game is not in progress
    */
   @Override
@@ -432,8 +432,11 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     }
     PawnsCard card = getHand(getCurrentTurn()).get(handId);
     BoardCell cell = getCellAt(row, col);
-    if (card.getCost() > cell.getPawns() || cell.getCard() != null) {
-      throw new IllegalArgumentException("Cannot play card");
+    if (card.getCost() > cell.getPawns() ||cell.getOwner() != getCurrentTurn()) {
+      throw new IllegalArgumentException("Not enough owned pawns to play card");
+    }
+    if (cell.getCard() != null) {
+      throw new IllegalArgumentException("Can't place card in occupied cell");
     }
     board[row][col].playCard(getCurrentPlayerHand().get(handId));
     lastPassed = false;

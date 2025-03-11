@@ -177,7 +177,7 @@ public class PawnsBoardTest {
     int redScore = board.getHand(Player.RED).get(0).getValue();
     int blueScore = board.getHand(Player.BLUE).get(0).getValue();
     board.placeCard(0, 0, 0);
-    board.placeCard(1, 0, 0);
+    board.placeCard(1, 2, 0);
     assertEquals(redScore, board.getScore(Player.RED));
     assertEquals(blueScore, board.getScore(Player.BLUE));
   }
@@ -324,8 +324,13 @@ public class PawnsBoardTest {
   @Test
   public void testPlaceCardOnlyWorksWithEnoughPawns() {
     board.startGame(redCards, blueCards, 1, false);
-    assertThrows(IllegalArgumentException.class,
-        () -> board.placeCard(0, 1, 0));
+    assertThrows(IllegalArgumentException.class, () -> board.placeCard(0, 1, 0));
+  }
+
+  @Test
+  public void testPlaceCardOnlyWorksIfPawnsAreOwnedByPlayer() {
+    board.startGame(redCards, blueCards, 1, false);
+    assertThrows(IllegalArgumentException.class, () -> board.placeCard(0, 2, 0));
   }
 
   @Test
