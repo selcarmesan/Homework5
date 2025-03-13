@@ -3,7 +3,7 @@ Description of User-Player Interface for future assignments.
 The User-Player interface would consist of a view of the board at the top.  It would then allow
 a player to see their own current hand laid out in front of them.  These two allow for the player
 to select which card to play, and which spot on the board to place it (if valid).
-There will also be quit button to exit out of the game at any point.
+There will also be restart button at the end of the game to start a new game.
 This interface would also consist of a skip button to interact with, which skips the current turn.
 As a non-interactable portion, it would also contain information regarding the current score each
 player had per row (although this could be considered part of the board display) which does not
