@@ -6,6 +6,9 @@ import java.util.Objects;
 import cs3500.pawnsboard.model.PawnsBoard;
 import cs3500.pawnsboard.model.Player;
 
+/**
+ * PawnsBoardTextualView displays a game of PawnsBoard.
+ */
 public class PawnsBoardTextualView implements PawnsBoardView {
 
   private final PawnsBoard<?, ?> model;
