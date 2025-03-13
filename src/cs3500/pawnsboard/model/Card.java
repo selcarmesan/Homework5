@@ -14,7 +14,7 @@ public interface Card {
   String getName();
 
   /**
-   * Returns the cost in pawns to play this card on the board
+   * Returns the cost in pawns to play this card on the board.
    *
    * @return the cost
    */

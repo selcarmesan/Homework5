@@ -62,7 +62,7 @@ public class PawnsCard implements Card {
   }
 
   /**
-   * Returns the cost in pawns to play this card on the board
+   * Returns the cost in pawns to play this card on the board.
    *
    * @return the cost
    */
@@ -107,9 +107,9 @@ public class PawnsCard implements Card {
   public boolean equals(Object o) {
     if (o instanceof PawnsCard) {
       PawnsCard other = (PawnsCard) o;
-      return (this.color.equals(other.color) && this.cost == other.cost &&
-              this.value == other.value && this.name.equals(other.name) &&
-              Arrays.deepEquals(this.influence, other.influence));
+      return (this.color.equals(other.color) && this.cost == other.cost
+              && this.value == other.value && this.name.equals(other.name)
+              && Arrays.deepEquals(this.influence, other.influence));
     }
     return false;
   }

@@ -9,6 +9,9 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Test class for Card.
+ */
 public class CardTest {
 
   private PawnsCard card;
@@ -63,13 +66,13 @@ public class CardTest {
     assertThrows(IllegalArgumentException.class,
         () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[3][3]));
     assertThrows(IllegalArgumentException.class,
-            () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[5][3]));
+        () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[5][3]));
     assertThrows(IllegalArgumentException.class,
-            () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[3][5]));
+        () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[3][5]));
     assertThrows(IllegalArgumentException.class,
-            () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[6][5]));
+        () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[6][5]));
     assertThrows(IllegalArgumentException.class,
-            () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[5][6]));
+        () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[5][6]));
   }
 
   @Test

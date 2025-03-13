@@ -6,9 +6,11 @@ import java.io.File;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+/**
+ * Test class for PawnsCardReader.
+ */
 public class CardReaderTest {
 
   @Test
@@ -55,8 +57,8 @@ public class CardReaderTest {
 
   @Test
   public void testCardReaderThrowsIfCardSpotUnmarked() {
-    File file = new File("test" + File.separator + "testDocs" +
-            File.separator + "test1.config");
+    File file = new File("test" + File.separator + "testDocs"
+            + File.separator + "test1.config");
     assertThrows(IllegalStateException.class,
         () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file));
   }
@@ -67,35 +69,35 @@ public class CardReaderTest {
     assertThrows(IllegalArgumentException.class,
         () -> PawnsCardReader.readCardsAlternativeSource(Player.BLUE, null));
     assertThrows(IllegalArgumentException.class,
-            () -> PawnsCardReader.readCardsAlternativeSource(null, file));
+        () -> PawnsCardReader.readCardsAlternativeSource(null, file));
   }
 
   @Test
   public void testCardReaderThrowsIfFileFormattedIncorrectly() {
-    File file1 = new File("test" + File.separator + "testDocs" +
-            File.separator + "test2.config");
+    File file1 = new File("test" + File.separator + "testDocs"
+            + File.separator + "test2.config");
     assertThrows(IllegalArgumentException.class,
-            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file1));
-    File file2 = new File("test" + File.separator + "testDocs" +
-            File.separator + "test3.config");
+        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file1));
+    File file2 = new File("test" + File.separator + "testDocs"
+            + File.separator + "test3.config");
     assertThrows(IllegalArgumentException.class,
-            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file2));
-    File file3 = new File("test" + File.separator + "testDocs" +
-            File.separator + "test4.config");
+        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file2));
+    File file3 = new File("test" + File.separator + "testDocs"
+            + File.separator + "test4.config");
     assertThrows(IllegalArgumentException.class,
-            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file3));
-    File file4 = new File("test" + File.separator + "testDocs" +
-            File.separator + "test5.config");
+        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file3));
+    File file4 = new File("test" + File.separator + "testDocs"
+            + File.separator + "test5.config");
     assertThrows(IllegalArgumentException.class,
-            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file4));
-    File file5 = new File("test" + File.separator + "testDocs" +
-            File.separator + "test6.config");
+        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file4));
+    File file5 = new File("test" + File.separator + "testDocs"
+            + File.separator + "test6.config");
     assertThrows(IllegalArgumentException.class,
-            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file5));
-    File file6 = new File("test" + File.separator + "testDocs" +
-            File.separator + "test7.config");
+        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file5));
+    File file6 = new File("test" + File.separator + "testDocs"
+            + File.separator + "test7.config");
     assertThrows(IllegalArgumentException.class,
-            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file6));
+        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file6));
   }
 
   private boolean[][] grabInfluenceRed() {

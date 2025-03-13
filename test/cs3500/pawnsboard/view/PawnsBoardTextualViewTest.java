@@ -16,6 +16,9 @@ import cs3500.pawnsboard.model.Player;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+/**
+ * Test class for PawnsBoardView.
+ */
 public class PawnsBoardTextualViewTest {
 
   PawnsBoard<PawnsCard, BoardCell> board;

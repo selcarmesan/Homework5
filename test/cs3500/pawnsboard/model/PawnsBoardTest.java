@@ -13,6 +13,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Test class for PawnsBoard.
+ */
 public class PawnsBoardTest {
 
   PawnsBoard<PawnsCard, BoardCell> board;
@@ -102,7 +105,7 @@ public class PawnsBoardTest {
     assertThrows(IllegalArgumentException.class,
         () -> board.startGame(null, blueCards, 1,  false));
     assertThrows(IllegalArgumentException.class,
-            () -> board.startGame(redCards, null, 1,  false));
+        () -> board.startGame(redCards, null, 1,  false));
   }
 
   @Test
@@ -113,7 +116,7 @@ public class PawnsBoardTest {
     blueCards.remove(0);
     redCards.add(0, null);
     assertThrows(IllegalArgumentException.class,
-            () -> board.startGame(redCards, blueCards, 1, false));
+        () -> board.startGame(redCards, blueCards, 1, false));
   }
 
   @Test

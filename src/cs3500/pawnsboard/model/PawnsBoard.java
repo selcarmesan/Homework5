@@ -131,7 +131,7 @@ public interface PawnsBoard<C extends Card, B extends Cell> {
   Player getCurrentTurn();
 
   /**
-   * Tells whether game is still in progress
+   * Tells whether game is still in progress.
    *
    * @return if the game state is over
    * @throws IllegalStateException if game is not in progress

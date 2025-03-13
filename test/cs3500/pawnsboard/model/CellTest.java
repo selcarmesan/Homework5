@@ -8,6 +8,9 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 
+/**
+ * Test class for Cell.
+ */
 public class CellTest {
 
   private Cell<PawnsCard> cell;
