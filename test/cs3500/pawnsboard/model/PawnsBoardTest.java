@@ -572,10 +572,47 @@ public class PawnsBoardTest {
   @Test
   public void testDrawingCardsIncreasesDeckAsExpected() {
     board.startGame(redCards, blueCards, 1, false);
+    board.placeCard(0, 0, 0);
+    assertEquals(0, board.getHand(Player.RED).size());
+    board.skipTurn();
+    assertEquals(1, board.getHand(Player.BLUE).size());
+    assertEquals(1, board.getHand(Player.RED).size());
+    board.placeCard(1, 0, 0);
+    assertEquals(2, board.getHand(Player.BLUE).size());
   }
 
   @Test
   public void testGetScoreOnlyCancelsForTotalScore() {
+    board.startGame(3, false);
+    board.placeCard(0, 0, 2);
+    board.placeCard(0, 2, 2);
+    assertEquals(2, board.getScore(Player.RED, 0));
+    assertEquals(2, board.getScore(Player.BLUE, 0));
+    assertEquals(0, board.getScore(Player.RED));
+    assertEquals(0, board.getScore(Player.BLUE));
+  }
 
+  @Test
+  public void testDoesNotDrawDeckEmpty() {
+    List<PawnsCard> smallRed = redCards.subList(0, 3);
+    List<PawnsCard> smallBlue = blueCards.subList(0, 3);
+    boolean[][] left = new boolean[5][5];
+    left[2][2] = true;
+    left[2][1] = true;
+    smallBlue.set(0, new PawnsCard("test", 1, 1, Player.BLUE, left));
+    smallBlue.set(1, new PawnsCard("test", 1, 1, Player.BLUE, left));
+    board = new PawnsBoardGame(1, 3);
+    board.startGame(smallRed, smallBlue, 1, false);
+    board.skipTurn();
+    board.placeCard(0, 2, 0);
+    board.skipTurn();
+    board.placeCard(0, 1, 0);
+    board.skipTurn();
+    assertEquals(3, board.getHand(Player.RED).size());
+    assertEquals(1, board.getHand(Player.BLUE).size());
+    board.placeCard(0, 0, 0);
+    board.skipTurn();
+    assertEquals(3, board.getHand(Player.RED).size());
+    assertEquals(0, board.getHand(Player.BLUE).size());
   }
 }
