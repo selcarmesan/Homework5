@@ -501,18 +501,18 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
         return;
       }
       if (randomDraw) {
-        redHand.add(redDeck.get(rand.nextInt(redDeck.size())));
+        redHand.add(redDeck.remove(rand.nextInt(redDeck.size())));
       } else {
-        redHand.add(redDeck.get(0));
+        redHand.add(redDeck.remove(0));
       }
     } else {
       if (blueDeck.isEmpty()) {
         return;
       }
       if (randomDraw) {
-        blueHand.add(blueDeck.get(rand.nextInt(blueDeck.size())));
+        blueHand.add(blueDeck.remove(rand.nextInt(blueDeck.size())));
       } else {
-        blueHand.add(blueDeck.get(0));
+        blueHand.add(blueDeck.remove(0));
       }
     }
   }
