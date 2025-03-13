@@ -128,5 +128,9 @@ public class PawnsBoardTextualViewTest {
     String cardExpected = "1 R_1 0\n" +
             "0 1_1 0\n";
     assertEquals(cardExpected, view.toString());
+    board.placeCard(1, 2, 0);
+    cardExpected = "1 R_1 0\n" +
+            "0 1_B 1\n";
+    assertEquals(cardExpected, view.toString());
   }
 }
