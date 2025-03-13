@@ -9,6 +9,7 @@ import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -146,10 +147,10 @@ public class PawnsBoardTest {
   @Test
   public void testStartGameThrowsIfMoreThanTwoOfSameCard() {
     List<PawnsCard> ogRed = new ArrayList<>(redCards);
-    redCards.addAll(redCards);
+    redCards.addAll(new ArrayList<>(redCards));
     assertThrows(IllegalArgumentException.class,
         () -> board.startGame(redCards, blueCards, 1, false));
-    blueCards.addAll(blueCards);
+    blueCards.addAll(new ArrayList<>(blueCards));
     assertThrows(IllegalArgumentException.class,
         () -> board.startGame(ogRed, blueCards, 1, false));
   }
@@ -271,7 +272,7 @@ public class PawnsBoardTest {
     redCards.add(0, new PawnsCard("test", 1, 1, Player.RED, influence));
     board.startGame(redCards, blueCards, 1, false);
     assertEquals(0, board.getCellAt(0, 1).getPawns());
-    assertEquals(null, board.getCellAt(0, 1).getOwner());
+    assertNull(board.getCellAt(0, 1).getOwner());
     board.placeCard(0, 0, 0);
     assertEquals(1, board.getCellAt(0, 1).getPawns());
     assertEquals(Player.RED, board.getCellAt(0, 1).getOwner());
@@ -324,8 +325,8 @@ public class PawnsBoardTest {
 
   @Test
   public void testCardIsRemovedWhenPlayed() {
-    board.startGame(redCards, blueCards, 1, false);
     PawnsCard secondCard = redCards.get(1);
+    board.startGame(redCards, blueCards, 2, false);
     board.placeCard(0, 0, 0);
     assertEquals(secondCard, board.getHand(Player.RED).get(0));
   }
@@ -447,7 +448,7 @@ public class PawnsBoardTest {
     board.startGame(redCards, blueCards, 1, false);
     board.skipTurn();
     board.skipTurn();
-    assertEquals(null, board.getWinner());
+    assertNull(board.getWinner());
   }
 
   @Test
@@ -495,10 +496,10 @@ public class PawnsBoardTest {
             assertEquals(Player.BLUE, cells[row][col].getOwner());
           }
         } else {
-          assertEquals(null, cells[row][col].getOwner());
+          assertNull(cells[row][col].getOwner());
           assertEquals(0, cells[row][col].getPawns());
         }
-        assertEquals(null, cells[row][col].getCard());
+        assertNull(cells[row][col].getCard());
       }
     }
   }
@@ -526,8 +527,8 @@ public class PawnsBoardTest {
     assertEquals(1, board.getCellAt(0, 2).getPawns());
     assertEquals(Player.BLUE, board.getCellAt(0, 2).getOwner());
     assertEquals(0, board.getCellAt(0, 1).getPawns());
-    assertEquals(null, board.getCellAt(0, 1).getOwner());
-    assertEquals(null, board.getCellAt(0, 0).getCard());
+    assertNull(board.getCellAt(0, 1).getOwner());
+    assertNull(board.getCellAt(0, 0).getCard());
     board.placeCard(0, 0, 0);
     assertEquals(redCards.get(0), board.getCellAt(0, 0).getCard());
     board.placeCard(0, 2, 0);
@@ -546,5 +547,36 @@ public class PawnsBoardTest {
     assertThrows(IllegalArgumentException.class, () -> board.getCellAt(0, -1));
     assertThrows(IllegalArgumentException.class, () -> board.getCellAt(0, 3));
     assertThrows(IllegalArgumentException.class, () -> board.getCellAt(2, 0));
+  }
+
+  @Test
+  public void testPlayFullGameWorks() {
+    board = new PawnsBoardGame(3, 5);
+    board.startGame(5, false);
+    board.placeCard(0, 0, 0);
+    // Grab -> (0,1), (0,2) +1 Red pawn (1 total)
+    board.placeCard(2, 4, 2);
+    // Geronimo -> (3,4), (4,4) +1 Blue pawn (2 total)
+    board.placeCard(1, 0, 4);
+    // Breakdance -> (0,1) +1 Red pawn (2 total), (2,1) +1 Red pawn (1 total)
+    board.placeCard(3, 0, 2);
+    // Halo -> (2,3), (3,3), (4,3), +1 Blue pawn (1 total), (4,4) +1 Blue pawn (2 total)
+    board.placeCard(0, 1, 2);
+    // Halo -> (1,1), (1,2) +1 Red pawn (1 total), (0,2) +1 Red pawn (2 total)
+    board.placeCard(0, 4, 0);
+    // Grab -> (0,3) +1 Blue pawn (1 total), (0,2) RP -> BP conversion (2 total)
+    board.placeCard(1, 2, 2);
+    // Orbital -> (3,2) +1 Red pawn (1 total), (1,4) BP -> RP conversion (1 total)
+    board.placeCard(4, 4, 4);
+    // Rainfall -> (4,2), (2,2) +1 Blue Pawn (1 total), (3,3) +1 Blue pawn (2 total)
+    board.placeCard(4, 0, 0 );
+    // Toss -> (4,2) BP -> RP conversion (1 total)
+    board.placeCard(3, 3, 4);
+    // Barrier -> (1,1), (2,1) RP -> BP conversion (1 total), (3,1), (4,1) +1 Blue pawn (1 total)
+  }
+
+  @Test
+  public void testDrawingCardsIncreasesDeckAsExpected() {
+
   }
 }

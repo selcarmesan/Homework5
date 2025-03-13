@@ -4,9 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 
 public class CellTest {
 
@@ -26,7 +26,7 @@ public class CellTest {
 
   @Test
   public void testGetAndChangeOwner() {
-    assertEquals(null, cell.getOwner());
+    assertNull(cell.getOwner());
     cell.addPawn(Player.RED);
     cell.changeOwner(Player.BLUE);
     assertEquals(Player.BLUE, cell.getOwner());
@@ -97,8 +97,8 @@ public class CellTest {
   public void testReturnedCardIsCopy() {
     cell.playCard(card);
     Card card2 = cell.getCard();
-    assertTrue(card2.equals(card));
-    assertFalse(card2 == card);
+    assertEquals(card2, card);
+    assertNotSame(card2, card);
   }
 
   @Test

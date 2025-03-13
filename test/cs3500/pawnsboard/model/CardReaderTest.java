@@ -3,9 +3,9 @@ package cs3500.pawnsboard.model;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
@@ -17,21 +17,21 @@ public class CardReaderTest {
     Card card1 = cards.get(0);
     Card card2 = cards.get(1);
     Card card3 = cards.get(2);
-    assertEquals("Smiler", card1.getName());
-    assertEquals(3, card1.getCost());
-    assertEquals(2, card1.getValue());
+    assertEquals("Grab", card1.getName());
+    assertEquals(1, card1.getCost());
+    assertEquals(1, card1.getValue());
     assertEquals(Player.RED, card1.getColor());
-    assertEquals(heartInfluence(), card1.getInfluence());
-    assertEquals("I-95", card2.getName());
-    assertEquals(2, card2.getCost());
+    assertEquals(grabInfluenceRed(), card1.getInfluence());
+    assertEquals("Toss", card2.getName());
+    assertEquals(1, card2.getCost());
     assertEquals(1, card2.getValue());
     assertEquals(Player.RED, card2.getColor());
-    assertEquals(I95InfluenceRed(), card2.getInfluence());
-    assertEquals("Love", card3.getName());
-    assertEquals(3, card3.getCost());
-    assertEquals(3, card3.getValue());
+    assertEquals(tossInfluenceRed(), card2.getInfluence());
+    assertEquals("Geronimo", card3.getName());
+    assertEquals(1, card3.getCost());
+    assertEquals(2, card3.getValue());
     assertEquals(Player.RED, card3.getColor());
-    assertEquals(LoveInfluence(), card3.getInfluence());
+    assertEquals(geronimoInfluence(), card3.getInfluence());
   }
 
   @Test
@@ -41,11 +41,11 @@ public class CardReaderTest {
     Card card2 = cards.get(1);
     Card card3 = cards.get(2);
     assertEquals(Player.BLUE, card1.getColor());
-    assertEquals(heartInfluence(), card1.getInfluence());
+    assertEquals(grabInfluenceBlue(), card1.getInfluence());
     assertEquals(Player.BLUE, card2.getColor());
-    assertEquals(I95InfluenceBlue(), card2.getInfluence());
+    assertEquals(tossInfluenceBlue(), card2.getInfluence());
     assertEquals(Player.BLUE, card3.getColor());
-    assertEquals(LoveInfluence(), card3.getInfluence());
+    assertEquals(geronimoInfluence(), card3.getInfluence());
   }
 
   @Test
@@ -53,79 +53,87 @@ public class CardReaderTest {
     assertThrows(IllegalArgumentException.class, () -> PawnsCardReader.readCards(null));
   }
 
-  // Fix
   @Test
-  public void testCardReaderThrowsIfCardSpotUnmarked() throws FileNotFoundException {
-    File file = new File("docs" + File.separator + "deck.config");
+  public void testCardReaderThrowsIfCardSpotUnmarked() {
+    File file = new File("test" + File.separator + "testDocs" +
+            File.separator + "test1.config");
+    assertThrows(IllegalStateException.class,
+        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file));
   }
 
-  // Fix
+  @Test
+  public void testCardReaderAlternateSourceThrowsNullArguments() {
+    File file = new File("docs" + File.separator + "deck.config");
+    assertThrows(IllegalArgumentException.class,
+        () -> PawnsCardReader.readCardsAlternativeSource(Player.BLUE, null));
+    assertThrows(IllegalArgumentException.class,
+            () -> PawnsCardReader.readCardsAlternativeSource(null, file));
+  }
+
   @Test
   public void testCardReaderThrowsIfFileFormattedIncorrectly() {
-    File file = new File("docs" + File.separator + "deck.config");
+    File file1 = new File("test" + File.separator + "testDocs" +
+            File.separator + "test2.config");
+    assertThrows(IllegalArgumentException.class,
+            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file1));
+    File file2 = new File("test" + File.separator + "testDocs" +
+            File.separator + "test3.config");
+    assertThrows(IllegalArgumentException.class,
+            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file2));
+    File file3 = new File("test" + File.separator + "testDocs" +
+            File.separator + "test4.config");
+    assertThrows(IllegalArgumentException.class,
+            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file3));
+    File file4 = new File("test" + File.separator + "testDocs" +
+            File.separator + "test5.config");
+    assertThrows(IllegalArgumentException.class,
+            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file4));
+    File file5 = new File("test" + File.separator + "testDocs" +
+            File.separator + "test6.config");
+    assertThrows(IllegalArgumentException.class,
+            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file5));
+    File file6 = new File("test" + File.separator + "testDocs" +
+            File.separator + "test7.config");
+    assertThrows(IllegalArgumentException.class,
+            () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file6));
   }
 
-  private boolean[][] heartInfluence() {
-    boolean[][] heart = new boolean[5][5];
-    heart[0][1] = true;
-    heart[0][3] = true;
-    heart[1][1] = true;
-    heart[1][3] = true;
-    heart[2][0] = true;
-    heart[2][2] = true;
-    heart[2][4] = true;
-    heart[3][0] = true;
-    heart[3][2] = true;
-    heart[3][4] = true;
-    heart[4][1] = true;
-    heart[4][3] = true;
-    return heart;
+  private boolean[][] grabInfluenceRed() {
+    boolean[][] grab = new boolean[5][5];
+    grab[2][2] = true;
+    grab[2][3] = true;
+    grab[2][4] = true;
+    return grab;
   }
 
-  private boolean[][] I95InfluenceRed() {
-    boolean[][] I95 = new boolean[5][5];
-    I95[0][2] = true;
-    I95[0][4] = true;
-    I95[1][2] = true;
-    I95[1][4] = true;
-    I95[2][2] = true;
-    I95[2][4] = true;
-    I95[3][2] = true;
-    I95[3][4] = true;
-    I95[4][2] = true;
-    I95[4][4] = true;
-    return I95;
+  private boolean[][] grabInfluenceBlue() {
+    boolean[][] grab = new boolean[5][5];
+    grab[2][0] = true;
+    grab[2][1] = true;
+    grab[2][2] = true;
+    return grab;
   }
 
-  private boolean[][] I95InfluenceBlue() {
-    boolean[][] I95 = new boolean[5][5];
-    I95[0][2] = true;
-    I95[0][0] = true;
-    I95[1][2] = true;
-    I95[1][0] = true;
-    I95[2][2] = true;
-    I95[2][0] = true;
-    I95[3][2] = true;
-    I95[3][0] = true;
-    I95[4][2] = true;
-    I95[4][0] = true;
-    return I95;
+  private boolean[][] tossInfluenceRed() {
+    boolean[][] toss = new boolean[5][5];
+    toss[2][2] = true;
+    toss[2][4] = true;
+    return toss;
   }
 
-  private boolean[][] LoveInfluence() {
-    boolean[][] Love = new boolean[5][5];
-    Love[0][1] = true;
-    Love[0][3] = true;
-    Love[1][0] = true;
-    Love[1][2] = true;
-    Love[1][4] = true;
-    Love[2][0] = true;
-    Love[2][2] = true;
-    Love[2][4] = true;
-    Love[3][1] = true;
-    Love[3][3] = true;
-    Love[4][2] = true;
-    return Love;
+  private boolean[][] tossInfluenceBlue() {
+    boolean[][] toss = new boolean[5][5];
+    toss[2][0] = true;
+    toss[2][2] = true;
+    return toss;
+  }
+
+  private boolean[][] geronimoInfluence() {
+    boolean[][] geronimo = new boolean[5][5];
+    geronimo[2][2] = true;
+    geronimo[3][2] = true;
+    geronimo[4][2] = true;
+    return geronimo;
   }
 
 }

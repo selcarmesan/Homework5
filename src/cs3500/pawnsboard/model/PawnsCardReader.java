@@ -30,8 +30,28 @@ public class PawnsCardReader {
     if (playerDeck == null) {
       throw new IllegalArgumentException("Cannot construct deck for null player");
     }
+    File file = new File("docs" + File.separator + "deck.config");
+    return formatCards(playerDeck, file);
+  }
+
+  /**
+   * Returns a deck of cards for the corresponding player, read from the given file.
+   * The deck for the blue player has its area of influence mirrored horizontally, but contains the
+   * same deck otherwise.
+   *
+   * @param playerDeck the player whose deck is constructed
+   * @param file       the file source to read from
+   * @return the completed deck
+   */
+  public static List<PawnsCard> readCardsAlternativeSource(Player playerDeck, File file) {
+    if (playerDeck == null || file == null) {
+      throw new IllegalArgumentException("Cannot construct deck for null player or file");
+    }
+    return formatCards(playerDeck, file);
+  }
+
+  private static List<PawnsCard> formatCards(Player playerDeck, File file) {
     try {
-      File file = new File("docs" + File.separator + "deck.config");
       Scanner scanner = new Scanner(file);
       ArrayList<PawnsCard> cards = new ArrayList<>();
       while (scanner.hasNextLine()) {
@@ -42,13 +62,20 @@ public class PawnsCardReader {
         boolean[][] influence = new boolean[5][5];
         for (int i = 0; i < 5; i++) {
           String line = scanner.nextLine();
+          if (line.length() != 5) {
+            throw new IllegalArgumentException("Config file formatted incorrectly");
+          }
           for (int j = 0; j < 5; j++) {
             int j2 = j;
             if (playerDeck == Player.BLUE) {
               j2 = 4 - j;
             }
-            influence[i][j] = line.charAt(j2) == 'I' || line.charAt(j2) == 'C';
-            if (i == 2 && line.charAt(j2) != 'C' && j2 == 2) {
+            char c = line.charAt(j2);
+            if (c != 'I' && c != 'X' && c != 'C') {
+              throw new IllegalArgumentException("Config file formatted incorrectly");
+            }
+            influence[i][j] = c == 'I' || c == 'C';
+            if (i == 2 && c != 'C' && j2 == 2) {
               throw new IllegalStateException("Config file formatted incorrectly");
             }
           }
@@ -56,7 +83,7 @@ public class PawnsCardReader {
         cards.add(new PawnsCard(name, cost, value, playerDeck, influence));
       }
       return cards;
-    } catch (IOException | NoSuchElementException e) {
+    } catch (NoSuchElementException | IOException e) {
       throw new IllegalArgumentException("Error reading config file, fix format and try again");
     }
   }
