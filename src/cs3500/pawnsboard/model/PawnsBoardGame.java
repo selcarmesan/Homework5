@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+// CLASS INVARIANT:  If the game is started, then the current turn is either RED or BLUE, never null
+// Is a logical if then statement.  Can be checked at any time.  Is ensured by the constructor,
+// as the game is not yet started, and the startGame method changes the player to RED before
+// starting the game.  From there on the only method that changes currentTurn is swapTurn, which
+// either changes it to RED or BLUE, neither null again.
 /**
  * A game of pawns board.  The game begins with an empty board of specified dimensions, with the
  * restrictions being that the board is rectangular, with a positive number of rows, and an odd
@@ -237,7 +242,8 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   }
 
   /**
-   * Returns the current score of the specified player.
+   * Returns the current total score of the specified player.  Cancels out per row if they have less
+   * than the opposing player, and both are cancelled out if equal.
    *
    * @param player the player whose score is returned
    * @return the player's score
@@ -251,13 +257,16 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     }
     int score = 0;
     for (int i = 0; i < rows; i++) {
-      score += getScore(player, i);
+      if (getScore(player, i) > getScore(getOtherPlayer(player), i)) {
+        score += getScore(player, i);
+      }
     }
     return score;
   }
 
   /**
-   * Returns the current score of the specified player in the particular row.
+   * Returns the current score of the specified player in the particular row.  Does not account for
+   * cancelling as with total scoring.
    *
    * @param player the player whose score is returned
    * @param row the row to score
@@ -278,18 +287,11 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
       throw new IllegalArgumentException("Row invalid");
     }
     int score = 0;
-    int tempPlayer = 0;
-    int tempOpponent = 0;
     for (int j = 0; j < cols; j++) {
       Cell<PawnsCard> cell = getCellAt(row, j);
       if (cell.getOwner() == player && cell.getCard() != null) {
-        tempPlayer += cell.getCard().getValue();
-      } else if (cell.getOwner() != player && cell.getCard() != null) {
-        tempOpponent += cell.getCard().getValue();
+        score += cell.getCard().getValue();
       }
-    }
-    if (tempPlayer > tempOpponent) {
-      score += tempPlayer;
     }
     return score;
   }
@@ -527,11 +529,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   }
 
   private void swapTurn() {
-    if (currentTurn == Player.RED) {
-      currentTurn = Player.BLUE;
-    } else {
-      currentTurn = Player.RED;
-    }
+    currentTurn = getOtherPlayer(getCurrentTurn());
     if (firstTurnOver) {
       drawCard(getCurrentTurn());
     }
@@ -562,6 +560,14 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
       } else {
         cell.addPawn();
       }
+    }
+  }
+
+  private Player getOtherPlayer(Player player) {
+    if (player == Player.RED) {
+      return Player.BLUE;
+    } else {
+      return Player.RED;
     }
   }
   //</editor-fold>

@@ -550,33 +550,32 @@ public class PawnsBoardTest {
   }
 
   @Test
-  public void testPlayFullGameWorks() {
+  public void testPlayMultipleMovesWorks() {
     board = new PawnsBoardGame(3, 5);
     board.startGame(5, false);
     board.placeCard(0, 0, 0);
     // Grab -> (0,1), (0,2) +1 Red pawn (1 total)
-    board.placeCard(2, 4, 2);
-    // Geronimo -> (3,4), (4,4) +1 Blue pawn (2 total)
+    board.placeCard(0, 4, 2);
+    // Geronimo -> (1,4), (2,4) +1 Blue pawn (2 total)
     board.placeCard(1, 0, 4);
     // Breakdance -> (0,1) +1 Red pawn (2 total), (2,1) +1 Red pawn (1 total)
-    board.placeCard(3, 0, 2);
-    // Halo -> (2,3), (3,3), (4,3), +1 Blue pawn (1 total), (4,4) +1 Blue pawn (2 total)
-    board.placeCard(0, 1, 2);
-    // Halo -> (1,1), (1,2) +1 Red pawn (1 total), (0,2) +1 Red pawn (2 total)
-    board.placeCard(0, 4, 0);
-    // Grab -> (0,3) +1 Blue pawn (1 total), (0,2) RP -> BP conversion (2 total)
-    board.placeCard(1, 2, 2);
-    // Orbital -> (3,2) +1 Red pawn (1 total), (1,4) BP -> RP conversion (1 total)
-    board.placeCard(4, 4, 4);
-    // Rainfall -> (4,2), (2,2) +1 Blue Pawn (1 total), (3,3) +1 Blue pawn (2 total)
-    board.placeCard(4, 0, 0 );
-    // Toss -> (4,2) BP -> RP conversion (1 total)
-    board.placeCard(3, 3, 4);
-    // Barrier -> (1,1), (2,1) RP -> BP conversion (1 total), (3,1), (4,1) +1 Blue pawn (1 total)
+    board.skipTurn();
+    board.skipTurn();
+    assertTrue(board.isGameOver());
+    assertEquals(2, board.getScore(Player.BLUE, 0));
+    assertEquals(2, board.getScore(Player.RED, 1));
+    assertEquals(0, board.getScore(Player.RED, 2));
+    assertEquals(0, board.getScore(Player.BLUE, 2));
+    assertEquals(null, board.getWinner());
   }
 
   @Test
   public void testDrawingCardsIncreasesDeckAsExpected() {
+    board.startGame(redCards, blueCards, 1, false);
+  }
+
+  @Test
+  public void testGetScoreOnlyCancelsForTotalScore() {
 
   }
 }
