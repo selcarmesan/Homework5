@@ -19,7 +19,18 @@ public class PawnsBoardTextualView implements PawnsBoardView {
    * @param model PawnsBoard model
    */
   public PawnsBoardTextualView(PawnsBoard<?, ?> model) {
+    if (Objects.isNull(model)) {
+      throw new IllegalArgumentException("Invalid Model");
+    }
     this.model = model;
+  }
+
+  /**
+   * Gets the model of the textual view.
+   * @return model
+   */
+  public PawnsBoard<?, ?> getModel() {
+    return model;
   }
 
   @Override

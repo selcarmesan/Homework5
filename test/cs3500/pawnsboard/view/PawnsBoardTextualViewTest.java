@@ -3,6 +3,7 @@ package cs3500.pawnsboard.view;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,65 @@ public class PawnsBoardTextualViewTest {
   }
 
   @Test
-  public void render() {
+  public void PawnsBoardTextualView() {
+    //Invalid Constructor
+    assertThrows("Invalid Model", IllegalArgumentException.class, () -> {
+      new PawnsBoardTextualView(null);
+    });
+
+    //Correct Implementation
+    PawnsBoardTextualView correct = new PawnsBoardTextualView(board);
+    assertEquals(board, correct.getModel());
+  }
+
+  @Test
+  public void testRender() {
+    Appendable ap = new StringBuilder();
+    PawnsBoardTextualView view = new PawnsBoardTextualView(board);
+    board.startGame(1, false);
+
+    //Null Appendable
+    assertThrows("Appendable is Null", IllegalArgumentException.class, () -> {
+      view.render(null);
+    });
+
+    //Render Properly
+    try {
+      view.render(ap);
+      assertEquals(view.toString(), ap.toString());
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed To Render");
+    }
+  }
+
+  @Test
+  public void testRenderIOException() {
+    PawnsBoardTextualView view = new PawnsBoardTextualView(board);
+    board.startGame(1, false);
+
+    class FailingAppendable implements Appendable {
+      @Override
+      public Appendable append(CharSequence csq) throws IOException {
+        throw new IOException("IOException");
+      }
+
+      @Override
+      public Appendable append(CharSequence csq, int start, int end) throws IOException {
+        throw new IOException("IOException");
+      }
+
+      @Override
+      public Appendable append(char c) throws IOException {
+        throw new IOException("IOException");
+      }
+    }
+
+    Appendable ap = new FailingAppendable();
+
+    //IOException
+    assertThrows("IOException", IOException.class, () -> {
+      view.render(ap);
+    });
   }
 
   @Test
