@@ -29,7 +29,11 @@ sequentially, in which case the game ends, and the winner can be determined.  Sc
 per row, and the player with the higher score cancels out all the opposing player's points
 in that row.
 
+The main class tests the functionality of the game. It runs a predetermined game of pawns board,
+playing each move with the game class and displaying using the view.
+
 All objects related to the model of the game can be found within the model package, along with
 the object that reads out the cards from the config file and converts them to a list.
 The view package contains the available view for the model, a textual representation.
+The main class is placed in pawns board package outside of model and view.
 The docs folder contains the deck config file.

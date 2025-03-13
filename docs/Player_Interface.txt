@@ -1,8 +1,9 @@
-Description of User-Player Interface for future assingments.
+Description of User-Player Interface for future assignments.
 
 The User-Player interface would consist of a view of the board at the top.  It would then allow
 a player to see their own current hand laid out in front of them.  These two allow for the player
 to select which card to play, and which spot on the board to place it (if valid).
+There will also be quit button to exit out of the game at any point.
 This interface would also consist of a skip button to interact with, which skips the current turn.
 As a non-interactable portion, it would also contain information regarding the current score each
 player had per row (although this could be considered part of the board display) which does not
@@ -16,5 +17,5 @@ moves themselves.  This also means the current total and per-row scores are impo
 player to strategize based off of these variables, as well as keep track of who is ahead.
 The skip button is important as well due to being an option to take during a turn instead of playing
 a card.  The last move played is simply so one knows what happened during the opponent's previous
-turn if they had not been paying attention before, and to make sure that they do not accidentially
+turn if they had not been paying attention before, and to make sure that they do not accidentally
 skip their turn, unknowingly ending the game if unaware the previous turn also skipped.
