@@ -31,6 +31,8 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
   private boolean randomDraw;
   private boolean gameStarted;
   private boolean gameOver;
+
+  // Is 0 indexed, and (row, col) ordered for all calls
   private BoardCell[][] board;
 
   private List<PawnsCard> redDeck;
