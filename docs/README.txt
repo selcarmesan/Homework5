@@ -37,3 +37,7 @@ the object that reads out the cards from the config file and converts them to a 
 The view package contains the available view for the model, a textual representation.
 The main class is placed in pawns board package outside of model and view.
 The docs folder contains the deck config file.
+
+
+HW5 CHANGES:
+Separated PlaceCard and IsMoveValid into two distinct methods rather than only containing placeCard.
