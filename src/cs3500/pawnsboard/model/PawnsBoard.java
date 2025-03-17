@@ -109,11 +109,27 @@ public interface PawnsBoard<C extends Card, B extends Cell> {
    * @param col the starting cell's column
    * @param handId the index of the card in the player's hand
    * @throws IllegalArgumentException if hand ID is invalid
+   *                                  if coordinates for row and column are out of bounds.
    *                                  if desired cell does not have enough owned pawns for the cost
    *                                  if desired cell has pawns that do not belong to the player
    * @throws IllegalStateException if game is not in progress
    */
   void placeCard(int row, int col, int handId);
+
+  /**
+   * Returns whether a move for the current player is valid, a move being the placement of
+   * a card onto a location on the board.  A move is valid if the card exists, the location is on
+   * the board, and the location has enough owned pawns by the player to cover the cost of the card.
+   * Cards can also only be played in cells that do not have a card played already.
+   *
+   * @param row the starting cell's row
+   * @param col the starting cell's column
+   * @param handId the index of the card in the player's hand
+   * @throws IllegalArgumentException if hand ID is invalid
+   *                                  if coordinates for row and column are out of bounds.
+   * @throws IllegalStateException if game is not in progress
+   */
+  boolean isMoveValid(int row, int col, int handId);
 
   /**
    * Skips the turn of the current player, rather than placing a new card.

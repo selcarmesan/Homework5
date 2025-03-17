@@ -446,12 +446,37 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
    * @param col    the starting cell's column
    * @param handId the index of the card in the player's hand
    * @throws IllegalArgumentException hand ID is invalid
+   *                                  if coordinates for row and column are out of bounds.
    *                                  if desired cell does not have enough owned pawns for the cost
    *                                  if desired cell has pawns that do not belong to the player
    * @throws IllegalStateException    if game is not in progress
    */
   @Override
   public void placeCard(int row, int col, int handId) {
+    if (!isMoveValid(row, col, handId)) {
+      throw new IllegalArgumentException("Move invalid");
+    }
+    PawnsCard card = getCurrentPlayerHand().remove(handId);
+    board[row][col].playCard(card);
+    lastPassed = false;
+    influenceBoard(row, col, card);
+    swapTurn();
+  }
+
+  /**
+   * Returns whether a move for the current player is valid, a move being the placement of
+   * a card onto a location on the board.  A move is valid if the card exists, the location is on
+   * the board, and the location has enough owned pawns by the player to cover the cost of the card.
+   * Cards can also only be played in cells that do not have a card played already.
+   *
+   * @param row the starting cell's row
+   * @param col the starting cell's column
+   * @param handId the index of the card in the player's hand
+   * @throws IllegalArgumentException if hand ID is invalid
+   *                                  if coordinates for row and column are out of bounds.
+   * @throws IllegalStateException if game is not in progress
+   */
+  public boolean isMoveValid(int row, int col, int handId) {
     if (!gameStarted) {
       throw new IllegalStateException("Game not started");
     }
@@ -463,13 +488,7 @@ public class PawnsBoardGame implements PawnsBoard<PawnsCard, BoardCell> {
     }
     PawnsCard card = getHand(getCurrentTurn()).remove(handId);
     BoardCell cell = getCellAt(row, col);
-    if (card.getCost() > cell.getPawns() || cell.getOwner() != getCurrentTurn()) {
-      throw new IllegalArgumentException("Not enough owned pawns to play card");
-    }
-    board[row][col].playCard(getCurrentPlayerHand().remove(handId));
-    lastPassed = false;
-    influenceBoard(row, col, card);
-    swapTurn();
+    return !(card.getCost() > cell.getPawns() || cell.getOwner() != getCurrentTurn());
   }
 
   /**
