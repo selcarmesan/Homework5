@@ -1,0 +1,21 @@
+Description of User-Player Interface for future assignments.
+
+The User-Player interface would consist of a view of the board at the top.  It would then allow
+a player to see their own current hand laid out in front of them.  These two allow for the player
+to select which card to play, and which spot on the board to place it (if valid).
+There will also be restart button at the end of the game to start a new game.
+This interface would also consist of a skip button to interact with, which skips the current turn.
+As a non-interactable portion, it would also contain information regarding the current score each
+player had per row (although this could be considered part of the board display) which does not
+account for score cancellation, along with the total score for both players above the board.
+It would also say the current turn, as well as the last move that was played.
+
+The reasoning behind this is that most of these pieces are required to allow the user/player to
+interact with the controller at the simplest level needed to play the game.  The board and hand
+are needed to see the current state of the game and plan which moves to make, as well as make the
+moves themselves.  This also means the current total and per-row scores are important to allow the
+player to strategize based off of these variables, as well as keep track of who is ahead.
+The skip button is important as well due to being an option to take during a turn instead of playing
+a card.  The last move played is simply so one knows what happened during the opponent's previous
+turn if they had not been paying attention before, and to make sure that they do not accidentally
+skip their turn, unknowingly ending the game if unaware the previous turn also skipped.
