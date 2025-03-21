@@ -13,46 +13,29 @@ import java.util.List;
  * player with the most points from the rows they claimed is the victor at the end, or it ends in a
  * draw.
  */
-public interface PawnsBoard<C extends Card, B extends Cell<C>> extends PawnsBoardReadOnly<C, B> {
+public interface PawnsBoard extends PawnsBoardReadOnly {
 
   /**
    * Initializes a new game of pawns board.  Both players are supplied their own decks containing
    * playing cards of their color, and dealt an equal amount of cards into their starting hand.
    * A new board is initialized which is empty, except for a singular red pawn in each cell in the
    * leftmost column, and a singular blue pawn in each cell in the rightmost column.  Red has the
-   * first turn.
+   * first turn.  The deck arguments are intended to be fetched using the PawnsCardReader class,
+   * with a config file specified when calling that class' method, however it is possible to
+   * manually create a deck as well.
    *
    * @param redDeck red player's deck
    * @param blueDeck blue player's deck
    * @param handSize the starting hand size for both players
    * @param randomDraw whether each new card is drawn randomly or from the front
    * @throws IllegalArgumentException if either decks are null or contain null
-   *                                  if either deck contains cards not of the respective color
    *                                  if the hand size is less than 1
    *                                  if either deck contains fewer cards than the number of cells
    *                                  if there are more than 2 copies of the same card in one deck
    *                                  if hand size is greater than a third of either deck size
    * @throws IllegalStateException if game is already in progress
    */
-  void startGame(List<C> redDeck, List<C> blueDeck, int handSize, boolean randomDraw);
-
-  /**
-   * Initializes a new game of pawns board.  Both players are supplied their own decks from the
-   * config file, and dealt an equal amount of cards into their starting hand.
-   * A new board is initialized which is empty, except for a singular red pawn in each cell in the
-   * leftmost column, and a singular blue pawn in each cell in the rightmost column.  Red has the
-   * first turn.
-   *
-   * @param handSize the starting hand size for both players
-   * @param randomDraw whether each new card is drawn randomly or from the front
-   * @throws IllegalArgumentException if there is some error with the config file
-   *                                  if the hand size is less than 1
-   *                                  if either deck contains fewer cards than the number of cells
-   *                                  if there are more than 2 copies of the same card in one deck
-   *                                  if hand size is greater than a third of either deck size
-   * @throws IllegalStateException if game is already in progress
-   */
-  void startGame(int handSize, boolean randomDraw);
+  void startGame(List<Card> redDeck, List<Card> blueDeck, int handSize, boolean randomDraw);
 
   /**
    * Influences the given board starting at the specified row and column.  Each card reaches at

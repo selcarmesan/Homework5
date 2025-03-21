@@ -14,18 +14,18 @@ import static org.junit.Assert.assertTrue;
  */
 public class CardTest {
 
-  private PawnsCard card;
+  private Card card;
 
   @Before
   public void setUp() {
-    card = new PawnsCard("test", 1, 1, Player.RED, new boolean[5][5]);
+    card = new PawnsCard("test", 1, 1, new boolean[5][5]);
   }
 
   @Test
   public void testCardConstructs() {
     boolean[][] grid = new boolean[5][5];
     grid[0][1] = true;
-    card = new PawnsCard("test", 1, 1, Player.RED, grid);
+    card = new PawnsCard("test", 1, 1, grid);
     for (int row = 0; row < 5; row++) {
       for (int col = 0; col < 5; col++) {
         if (row == 0 && col == 1) {
@@ -38,47 +38,45 @@ public class CardTest {
   }
 
   @Test
-  public void testConstructThrowsNullNameColorInfluence() {
+  public void testConstructThrowsNullNameInfluence() {
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard(null, 1, 1, Player.RED, new boolean[5][5]));
+        () -> new PawnsCard(null, 1, 1, new boolean[5][5]));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 1, 1, null, new boolean[5][5]));
-    assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 1, 1, Player.RED, null));
+        () -> new PawnsCard("test", 1, 1, null));
   }
 
   @Test
   public void testConstructThrowsInvalidCost() {
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 0, 1, Player.RED, new boolean[5][5]));
+        () -> new PawnsCard("test", 0, 1, new boolean[5][5]));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 5, 1, Player.RED, new boolean[5][5]));
+        () -> new PawnsCard("test", 5, 1, new boolean[5][5]));
   }
 
   @Test
   public void testConstructThrowsInvalidValue() {
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 1, 0, Player.RED, new boolean[5][5]));
+        () -> new PawnsCard("test", 1, 0, new boolean[5][5]));
   }
 
   @Test
   public void testConstructThrowsInvalidInfluenceGrid() {
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[3][3]));
+        () -> new PawnsCard("test", 1, 1, new boolean[3][3]));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[5][3]));
+        () -> new PawnsCard("test", 1, 1, new boolean[5][3]));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[3][5]));
+        () -> new PawnsCard("test", 1, 1, new boolean[3][5]));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[6][5]));
+        () -> new PawnsCard("test", 1, 1, new boolean[6][5]));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsCard("test", 1, 1, Player.RED, new boolean[5][6]));
+        () -> new PawnsCard("test", 1, 1, new boolean[5][6]));
   }
 
   @Test
   public void testConstructorCopiesInfluence() {
     boolean[][] influence = new boolean[5][5];
-    card = new PawnsCard("test", 1, 1, Player.RED, influence);
+    card = new PawnsCard("test", 1, 1, influence);
     assertFalse(card.getInfluence()[0][0]);
     influence[0][0] = true;
     assertFalse(card.getInfluence()[0][0]);
@@ -97,11 +95,6 @@ public class CardTest {
   @Test
   public void testGetValue() {
     assertEquals(1, card.getValue());
-  }
-
-  @Test
-  public void testGetColor() {
-    assertEquals(Player.RED, card.getColor());
   }
 
   @Test
@@ -126,38 +119,34 @@ public class CardTest {
   public void testEquals() {
     assertEquals(card, card);
     boolean[][] grid = new boolean[5][5];
-    PawnsCard card2 = new PawnsCard("test", 1, 1, Player.RED, grid);
+    Card card2 = new PawnsCard("test", 1, 1, grid);
     assertEquals(card, card2);
-    PawnsCard cardName = new PawnsCard("tes", 1, 1, Player.RED, grid);
+    Card cardName = new PawnsCard("tes", 1, 1, grid);
     assertNotEquals(card, cardName);
-    PawnsCard cardCost = new PawnsCard("test", 2, 1, Player.RED, grid);
+    Card cardCost = new PawnsCard("test", 2, 1, grid);
     assertNotEquals(card, cardCost);
-    PawnsCard cardValue =  new PawnsCard("test", 1, 2, Player.RED, grid);
+    Card cardValue =  new PawnsCard("test", 1, 2, grid);
     assertNotEquals(card, cardValue);
-    PawnsCard cardColor = new PawnsCard("test", 1, 1, Player.BLUE, grid);
-    assertNotEquals(card, cardColor);
     grid[0][0] = true;
-    PawnsCard cardInfluence = new PawnsCard("test", 1, 1, Player.BLUE, grid);
-    assertNotEquals(card, cardInfluence);
-    assertNotEquals(card, new BoardCell());
+    Card cardInfluence = new PawnsCard("test", 1, 1, grid);
+    assertNotEquals(cardInfluence, card);
+    assertNotEquals(new BoardCell(), card);
   }
 
   @Test
   public void testHashCode() {
     assertEquals(card.hashCode(), card.hashCode());
     boolean[][] grid = new boolean[5][5];
-    PawnsCard card2 = new PawnsCard("test", 1, 1, Player.RED, grid);
+    Card card2 = new PawnsCard("test", 1, 1, grid);
     assertEquals(card.hashCode(), card2.hashCode());
-    PawnsCard cardName = new PawnsCard("tes", 1, 1, Player.RED, grid);
+    Card cardName = new PawnsCard("tes", 1, 1, grid);
     assertNotEquals(card.hashCode(), cardName.hashCode());
-    PawnsCard cardCost = new PawnsCard("test", 2, 1, Player.RED, grid);
+    Card cardCost = new PawnsCard("test", 2, 1, grid);
     assertNotEquals(card.hashCode(), cardCost.hashCode());
-    PawnsCard cardValue =  new PawnsCard("test", 1, 2, Player.RED, grid);
+    Card cardValue =  new PawnsCard("test", 1, 2, grid);
     assertNotEquals(card.hashCode(), cardValue.hashCode());
-    PawnsCard cardColor = new PawnsCard("test", 1, 1, Player.BLUE, grid);
-    assertNotEquals(card.hashCode(), cardColor.hashCode());
     grid[0][0] = true;
-    PawnsCard cardInfluence = new PawnsCard("test", 1, 1, Player.BLUE, grid);
+    Card cardInfluence = new PawnsCard("test", 1, 1, grid);
     assertNotEquals(card.hashCode(), cardInfluence.hashCode());
   }
 }

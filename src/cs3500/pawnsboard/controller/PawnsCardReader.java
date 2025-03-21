@@ -1,4 +1,4 @@
-package cs3500.pawnsboard.model;
+package cs3500.pawnsboard.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import cs3500.pawnsboard.model.Card;
+import cs3500.pawnsboard.model.PawnsCard;
+import cs3500.pawnsboard.model.Player;
 
 /**
  * Reads from a config file, and processes its contents into a list of cards based on a
@@ -17,43 +21,25 @@ import java.util.Scanner;
 public class PawnsCardReader {
 
   /**
-   * Returns a deck of cards for the corresponding player, read from the config file (deck.config)
-   * The deck for the blue player has its area of influence mirrored horizontally, but contains the
-   * same deck otherwise.
-   *
-   * @param playerDeck the player for which to make the deck
-   * @return the constructed deck
-   * @throws IllegalArgumentException if player deck is null
-   *                                  if some error reading file or format is incorrect
-   */
-  public static List<PawnsCard> readCards(Player playerDeck) {
-    if (playerDeck == null) {
-      throw new IllegalArgumentException("Cannot construct deck for null player");
-    }
-    File file = new File("docs" + File.separator + "deck.config");
-    return formatCards(playerDeck, file);
-  }
-
-  /**
    * Returns a deck of cards for the corresponding player, read from the given file.
    * The deck for the blue player has its area of influence mirrored horizontally, but contains the
    * same deck otherwise.
    *
    * @param playerDeck the player whose deck is constructed
-   * @param file       the file source to read from
+   * @param file the file source to read from
    * @return the completed deck
    */
-  public static List<PawnsCard> readCardsAlternativeSource(Player playerDeck, File file) {
+  public static List<Card> readCards(Player playerDeck, File file) {
     if (playerDeck == null || file == null) {
       throw new IllegalArgumentException("Cannot construct deck for null player or file");
     }
     return formatCards(playerDeck, file);
   }
 
-  private static List<PawnsCard> formatCards(Player playerDeck, File file) {
+  private static List<Card> formatCards(Player playerDeck, File file) {
     try {
       Scanner scanner = new Scanner(file);
-      ArrayList<PawnsCard> cards = new ArrayList<>();
+      List<Card> cards = new ArrayList<>();
       while (scanner.hasNextLine()) {
         String name = scanner.next();
         int cost = scanner.nextInt();
@@ -80,7 +66,7 @@ public class PawnsCardReader {
             }
           }
         }
-        cards.add(new PawnsCard(name, cost, value, playerDeck, influence));
+        cards.add(new PawnsCard(name, cost, value, influence));
       }
       return cards;
     } catch (NoSuchElementException | IOException e) {

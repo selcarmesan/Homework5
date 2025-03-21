@@ -13,17 +13,18 @@ import static org.junit.Assert.assertThrows;
  */
 public class CellTest {
 
-  private Cell<PawnsCard> cell;
-  private PawnsCard card;
+  private Cell cell;
+  private Card card;
 
   @Before
   public void setUp() {
     cell = new BoardCell();
-    card = new PawnsCard("test", 1, 1, Player.BLUE, new boolean[5][5]);
+    card = new PawnsCard("test", 1, 1, new boolean[5][5]);
   }
 
   @Test
   public void testCellConstructsProperly() {
+    cell = new BoardCell();
     assertEquals(0, cell.getPawns());
   }
 
@@ -35,7 +36,6 @@ public class CellTest {
     assertEquals(Player.BLUE, cell.getOwner());
     cell.changeOwner(Player.RED);
     assertEquals(Player.RED, cell.getOwner());
-
   }
 
   @Test
@@ -60,11 +60,11 @@ public class CellTest {
 
   @Test
   public void testAddPawnThrowsWhenCardPlayed() {
-    cell.playCard(card);
+    cell.playCard(card, Player.BLUE);
     assertThrows(IllegalStateException.class, () -> cell.addPawn(Player.RED));
     cell = new BoardCell();
     cell.addPawn(Player.RED);
-    cell.playCard(card);
+    cell.playCard(card, Player.BLUE);
     assertThrows(IllegalStateException.class, () -> cell.addPawn());
   }
 
@@ -86,19 +86,19 @@ public class CellTest {
 
   @Test
   public void testChangeOwnerThrowsAfterCardIsPlayed() {
-    cell.playCard(card);
+    cell.playCard(card, Player.BLUE);
     assertThrows(IllegalStateException.class, () -> cell.changeOwner(Player.BLUE));
   }
 
   @Test
   public void testPlayAndGetCard() {
-    cell.playCard(card);
+    cell.playCard(card, Player.BLUE);
     assertEquals(card, cell.getCard());
   }
 
   @Test
   public void testReturnedCardIsCopy() {
-    cell.playCard(card);
+    cell.playCard(card, Player.BLUE);
     Card card2 = cell.getCard();
     assertEquals(card2, card);
     assertNotSame(card2, card);
@@ -106,16 +106,17 @@ public class CellTest {
 
   @Test
   public void testPlayCardThrowsIfCardPlayedAlready() {
-    cell.playCard(card);
-    assertThrows(IllegalStateException.class, () -> cell.playCard(card));
+    cell.playCard(card, Player.BLUE);
+    assertThrows(IllegalStateException.class, () -> cell.playCard(card, Player.BLUE));
   }
 
   @Test
   public void testPlayCardThrowsWhenGivenNullCard() {
-    assertThrows(IllegalArgumentException.class, () -> cell.playCard(null));
+    assertThrows(IllegalArgumentException.class, () -> cell.playCard(null, Player.BLUE));
   }
 
-
-
-
+  @Test
+  public void testPlayCardThrowsWhenGivenNullPlayer() {
+    assertThrows(IllegalArgumentException.class, () -> cell.playCard(card, null));
+  }
 }

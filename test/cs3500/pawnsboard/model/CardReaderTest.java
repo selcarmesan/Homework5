@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.io.File;
 import java.util.List;
 
+import cs3500.pawnsboard.controller.PawnsCardReader;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
@@ -15,44 +17,35 @@ public class CardReaderTest {
 
   @Test
   public void testCardReaderReadsRed() {
-    List<PawnsCard> cards = PawnsCardReader.readCards(Player.RED);
+    File red = new File("docs" + File.separator + "deckRed.config");
+    List<Card> cards = PawnsCardReader.readCards(Player.RED, red);
     Card card1 = cards.get(0);
     Card card2 = cards.get(1);
     Card card3 = cards.get(2);
     assertEquals("Grab", card1.getName());
     assertEquals(1, card1.getCost());
     assertEquals(1, card1.getValue());
-    assertEquals(Player.RED, card1.getColor());
     assertEquals(grabInfluenceRed(), card1.getInfluence());
     assertEquals("Toss", card2.getName());
     assertEquals(1, card2.getCost());
     assertEquals(1, card2.getValue());
-    assertEquals(Player.RED, card2.getColor());
     assertEquals(tossInfluenceRed(), card2.getInfluence());
     assertEquals("Geronimo", card3.getName());
     assertEquals(1, card3.getCost());
     assertEquals(2, card3.getValue());
-    assertEquals(Player.RED, card3.getColor());
     assertEquals(geronimoInfluence(), card3.getInfluence());
   }
 
   @Test
   public void testCardReaderReadsBlue() {
-    List<PawnsCard> cards = PawnsCardReader.readCards(Player.BLUE);
+    File blue = new File("docs" + File.separator + "deckBlue.config");
+    List<Card> cards = PawnsCardReader.readCards(Player.BLUE, blue);
     Card card1 = cards.get(0);
     Card card2 = cards.get(1);
     Card card3 = cards.get(2);
-    assertEquals(Player.BLUE, card1.getColor());
     assertEquals(grabInfluenceBlue(), card1.getInfluence());
-    assertEquals(Player.BLUE, card2.getColor());
     assertEquals(tossInfluenceBlue(), card2.getInfluence());
-    assertEquals(Player.BLUE, card3.getColor());
     assertEquals(geronimoInfluence(), card3.getInfluence());
-  }
-
-  @Test
-  public void testCardReaderThrowsIfPlayerNull() {
-    assertThrows(IllegalArgumentException.class, () -> PawnsCardReader.readCards(null));
   }
 
   @Test
@@ -60,16 +53,16 @@ public class CardReaderTest {
     File file = new File("test" + File.separator + "testDocs"
             + File.separator + "test1.config");
     assertThrows(IllegalStateException.class,
-        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file));
+        () -> PawnsCardReader.readCards(Player.RED, file));
   }
 
   @Test
-  public void testCardReaderAlternateSourceThrowsNullArguments() {
-    File file = new File("docs" + File.separator + "deck.config");
+  public void testCardReaderThrowsNullArguments() {
+    File file = new File("docs" + File.separator + "deckRed.config");
     assertThrows(IllegalArgumentException.class,
-        () -> PawnsCardReader.readCardsAlternativeSource(Player.BLUE, null));
+        () -> PawnsCardReader.readCards(Player.BLUE, null));
     assertThrows(IllegalArgumentException.class,
-        () -> PawnsCardReader.readCardsAlternativeSource(null, file));
+        () -> PawnsCardReader.readCards(null, file));
   }
 
   @Test
@@ -77,27 +70,27 @@ public class CardReaderTest {
     File file1 = new File("test" + File.separator + "testDocs"
             + File.separator + "test2.config");
     assertThrows(IllegalArgumentException.class,
-        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file1));
+        () -> PawnsCardReader.readCards(Player.RED, file1));
     File file2 = new File("test" + File.separator + "testDocs"
             + File.separator + "test3.config");
     assertThrows(IllegalArgumentException.class,
-        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file2));
+        () -> PawnsCardReader.readCards(Player.RED, file2));
     File file3 = new File("test" + File.separator + "testDocs"
             + File.separator + "test4.config");
     assertThrows(IllegalArgumentException.class,
-        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file3));
+        () -> PawnsCardReader.readCards(Player.RED, file3));
     File file4 = new File("test" + File.separator + "testDocs"
             + File.separator + "test5.config");
     assertThrows(IllegalArgumentException.class,
-        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file4));
+        () -> PawnsCardReader.readCards(Player.RED, file4));
     File file5 = new File("test" + File.separator + "testDocs"
             + File.separator + "test6.config");
     assertThrows(IllegalArgumentException.class,
-        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file5));
+        () -> PawnsCardReader.readCards(Player.RED, file5));
     File file6 = new File("test" + File.separator + "testDocs"
             + File.separator + "test7.config");
     assertThrows(IllegalArgumentException.class,
-        () -> PawnsCardReader.readCardsAlternativeSource(Player.RED, file6));
+        () -> PawnsCardReader.readCards(Player.RED, file6));
   }
 
   private boolean[][] grabInfluenceRed() {

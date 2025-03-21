@@ -2,6 +2,8 @@ package cs3500.pawnsboard.view;
 
 import java.io.IOException;
 
+import cs3500.pawnsboard.model.PawnsBoard;
+
 /**
  * Interface for a PawnsBoard game view.
  */
@@ -15,4 +17,9 @@ public interface PawnsBoardView {
    */
   void render(Appendable append) throws IOException;
 
+  /**
+   * Gets the model of the textual view.
+   * @return model
+   */
+  PawnsBoard getModel();
 }

@@ -1,6 +1,6 @@
 package cs3500.pawnsboard.model;
 
-public interface CellReadOnly<C extends Card> {
+public interface CellReadOnly {
 
   /**
    * Returns the name of the player that owns this cell currently, whether pawns or card placement.
@@ -22,5 +22,5 @@ public interface CellReadOnly<C extends Card> {
    *
    * @return the card
    */
-  C getCard();
+  Card getCard();
 }

@@ -7,7 +7,7 @@ import java.util.List;
  * to keep track of information for, and their respective scores, pawns, and placed cards across the
  * board.
  */
-public interface PawnsBoardReadOnly<C extends Card, B extends Cell<C>> {
+public interface PawnsBoardReadOnly {
 
   /**
    * Returns the number of rows on the board.
@@ -22,14 +22,15 @@ public interface PawnsBoardReadOnly<C extends Card, B extends Cell<C>> {
   int getCols();
 
   /**
-   * Returns the current score of the specified player.
+   * Returns the current total score of the specified player.  Cancels out per row if they have less
+   * than the opposing player, and both are cancelled out if equal.
    *
    * @param player the player whose score is returned
    * @return the player's score
    * @throws IllegalStateException if game is not in progress
    * @throws IllegalArgumentException if player is null
    */
-  int getScore(Player player);
+  int getTotalScore(Player player);
 
   /**
    * Returns the current score of the specified player in the particular row.
@@ -41,7 +42,7 @@ public interface PawnsBoardReadOnly<C extends Card, B extends Cell<C>> {
    * @throws IllegalArgumentException if row is out of bounds
    *                                  if player is null
    */
-  int getScore(Player player, int row);
+  int getRowScore(Player player, int row);
 
   /**
    * Returns the current hand of cards belonging to the specified player.
@@ -51,7 +52,7 @@ public interface PawnsBoardReadOnly<C extends Card, B extends Cell<C>> {
    * @throws IllegalStateException if game is not in progress
    * @throws IllegalArgumentException if player is null
    */
-  List<C> getHand(Player player);
+  List<Card> getHand(Player player);
 
   /**
    * Returns whether a move for the current player is valid, a move being the placement of
@@ -100,7 +101,7 @@ public interface PawnsBoardReadOnly<C extends Card, B extends Cell<C>> {
    * @return the board
    * @throws IllegalStateException if game is not in progress
    */
-  B[][] getBoard();
+  Cell[][] getBoard();
 
   /**
    * Returns a copy of the specified cell.
@@ -111,5 +112,5 @@ public interface PawnsBoardReadOnly<C extends Card, B extends Cell<C>> {
    * @throws IllegalArgumentException if row and column pair marks an invalid space
    * @throws IllegalStateException if game is not in progress
    */
-  B getCellAt(int row, int col);
+  Cell getCellAt(int row, int col);
 }

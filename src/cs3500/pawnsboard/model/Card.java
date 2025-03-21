@@ -28,13 +28,6 @@ public interface Card {
   int getValue();
 
   /**
-   * Returns which color this card is, which also determines the owner and influence.
-   *
-   * @return the card color
-   */
-  Player getColor();
-
-  /**
    * Returns the influence grid for this card.
    */
   boolean[][] getInfluence();
