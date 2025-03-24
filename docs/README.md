@@ -27,9 +27,6 @@ red & blue, the cards used for making moves as a player, and the cells that the 
 The controller contains a card reader class, which takes from a specified File to format it into
 a list of cards for a particular player.
 
-The view takes in a game of pawns board, and while active, is able to represent the board and hands
-in a simple, textual form to view the current progress of the game.
-
 The card class has a name, cost, value, and influence grid.  It acts as a move to make
 within the game, requiring the space it is played in to have the proper number of pawns belonging
 to the player, after which its value (score) comes into play for the sake of tallying.
@@ -45,6 +42,13 @@ if possible, or skipping their turn.  The game continues until both players skip
 sequentially, in which case the game ends, and the winner can be determined.  Scoring is done
 per row, and the player with the higher score cancels out all the opposing player's points
 in that row.
+
+Strategies are single-method classes which take in an active game of Pawns Board, and a player, and
+returns the most optimal move for that player according to the strategy, or if there are none, 
+throws an exception.
+
+A view takes in a game of pawns board, and while active, is able to represent the board and hands
+in some form, whether through a GUI or a simple textual view.
 
 The main class tests the functionality of the game. It runs a predetermined game of pawns board,
 playing each move with the game class and displaying using the view.

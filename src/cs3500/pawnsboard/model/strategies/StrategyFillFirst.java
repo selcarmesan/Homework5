@@ -22,7 +22,7 @@ public class StrategyFillFirst implements PawnsBoardStrategy {
     for (int r = 0; r < board.getRows(); r++) {
       for (int c = 0; c < board.getCols(); c++) {
         for (int i = 0; i < board.getHand(player).size(); i++) {
-          if (board.isMoveValid(r, c, i)) {
+          if (board.isMoveValid(r, c, i, player)) {
             return new Move(r, c, i);
           }
         }

@@ -417,7 +417,7 @@ public class PawnsBoardGame implements PawnsBoard {
    */
   @Override
   public void placeCard(int row, int col, int handId) {
-    if (!isMoveValid(row, col, handId)) {
+    if (!isMoveValid(row, col, handId, getCurrentTurn())) {
       throw new IllegalArgumentException("Move invalid");
     }
     Card card = getCurrentPlayerHand().remove(handId);
@@ -436,13 +436,18 @@ public class PawnsBoardGame implements PawnsBoard {
    * @param row the starting cell's row
    * @param col the starting cell's column
    * @param handId the index of the card in the player's hand
+   * @param player the player to check validity for
    * @throws IllegalArgumentException if hand ID is invalid
+   *                                  if player is null
    *                                  if coordinates for row and column are out of bounds.
    * @throws IllegalStateException if game is not in progress
    */
-  public boolean isMoveValid(int row, int col, int handId) {
+  public boolean isMoveValid(int row, int col, int handId, Player player) {
     if (!gameStarted) {
       throw new IllegalStateException("Game not started");
+    }
+    if (player == null) {
+      throw new IllegalArgumentException("Player cannot be null");
     }
     if (!locationValid(row, col)) {
       throw new IllegalArgumentException("Invalid location");
@@ -450,9 +455,9 @@ public class PawnsBoardGame implements PawnsBoard {
     if (handId < 0 || handId >= getCurrentPlayerHand().size()) {
       throw new IllegalArgumentException("Invalid hand id");
     }
-    Card card = getHand(getCurrentTurn()).remove(handId);
+    Card card = getHand(player).remove(handId);
     Cell cell = getCellAt(row, col);
-    return !(card.getCost() > cell.getPawns() || cell.getOwner() != getCurrentTurn());
+    return !(card.getCost() > cell.getPawns() || cell.getOwner() != player);
   }
 
   /**

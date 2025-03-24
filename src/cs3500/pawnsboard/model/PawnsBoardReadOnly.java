@@ -63,11 +63,13 @@ public interface PawnsBoardReadOnly {
    * @param row the starting cell's row
    * @param col the starting cell's column
    * @param handId the index of the card in the player's hand
+   * @param player the player to check validity for
    * @throws IllegalArgumentException if hand ID is invalid
+   *                                  if player is null
    *                                  if coordinates for row and column are out of bounds.
    * @throws IllegalStateException if game is not in progress
    */
-  boolean isMoveValid(int row, int col, int handId);
+  boolean isMoveValid(int row, int col, int handId, Player player);
 
   /**
    * Returns the player whose turn it is.

@@ -99,7 +99,7 @@ public class MockBoardOneValid implements PawnsBoardReadOnly {
    * @throws IllegalStateException    if game is not in progress
    */
   @Override
-  public boolean isMoveValid(int row, int col, int handId) {
+  public boolean isMoveValid(int row, int col, int handId, Player player) {
     log.append("Checked move: " + row + ", " + col + ", " + handId + "\n");
     return row == 1 && col == 1 && handId == 1;
   }

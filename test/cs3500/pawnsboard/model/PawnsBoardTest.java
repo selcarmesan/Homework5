@@ -390,23 +390,30 @@ public class PawnsBoardTest {
 
   @Test
   public void testIsMoveValidThrowsGameNotStarted() {
-    assertThrows(IllegalStateException.class, () -> board.isMoveValid(0, 0, 0));
+    assertThrows(IllegalStateException.class,
+        () -> board.isMoveValid(0, 0, 0, Player.RED));
   }
 
   @Test
   public void testIsMoveValidThrowsInvalidHandId() {
     board.startGame(redCards, blueCards, 1, false);
-    assertThrows(IllegalArgumentException.class, () -> board.isMoveValid(0, 0, -1));
-    assertThrows(IllegalArgumentException.class, () -> board.isMoveValid(0, 0, 2));
+    assertThrows(IllegalArgumentException.class,
+        () -> board.isMoveValid(0, 0, -1, Player.RED));
+    assertThrows(IllegalArgumentException.class,
+        () -> board.isMoveValid(0, 0, 2, Player.RED));
   }
 
   @Test
   public void testIsMoveValidThrowsInvalidLocation() {
     board.startGame(redCards, blueCards, 1, false);
-    assertThrows(IllegalArgumentException.class, () -> board.isMoveValid(0, -1, 0));
-    assertThrows(IllegalArgumentException.class, () -> board.isMoveValid(-1, 0, 0));
-    assertThrows(IllegalArgumentException.class, () -> board.isMoveValid(2, 0, 0));
-    assertThrows(IllegalArgumentException.class, () -> board.isMoveValid(0, 3, 0));
+    assertThrows(IllegalArgumentException.class,
+        () -> board.isMoveValid(0, -1, 0, Player.RED));
+    assertThrows(IllegalArgumentException.class,
+        () -> board.isMoveValid(-1, 0, 0, Player.RED));
+    assertThrows(IllegalArgumentException.class,
+        () -> board.isMoveValid(2, 0, 0, Player.RED));
+    assertThrows(IllegalArgumentException.class,
+        () -> board.isMoveValid(0, 3, 0, Player.RED));
   }
 
   @Test
@@ -414,19 +421,19 @@ public class PawnsBoardTest {
     board.startGame(redCards, blueCards, 1, false);
     board.placeCard(0, 0, 0);
     board.skipTurn();
-    assertFalse(board.isMoveValid(0, 0, 0));
+    assertFalse(board.isMoveValid(0, 0, 0, board.getCurrentTurn()));
   }
 
   @Test
   public void testMoveInvalidNotEnoughPawns() {
     board.startGame(redCards, blueCards, 1, false);
-    assertFalse(board.isMoveValid(0, 1, 0));
+    assertFalse(board.isMoveValid(0, 1, 0, board.getCurrentTurn()));
   }
 
   @Test
   public void testMoveInvalidPawnsNotOwned() {
     board.startGame(redCards, blueCards, 1, false);
-    assertFalse(board.isMoveValid(0, 2, 0));
+    assertFalse(board.isMoveValid(0, 2, 0, board.getCurrentTurn()));
   }
 
   @Test

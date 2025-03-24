@@ -51,6 +51,15 @@ public class PawnsBoardTextualView implements PawnsBoardView {
     }
   }
 
+  /**
+   * Returns the current board and game status as a textual representation.  Each line has two
+   * integers to the far left and far right, representing the total score of red (left) and total
+   * score of blue (right).  For each individual cell on the board, an empty cell is represented as
+   * an underscore, a cell with pawns is represented by that number of pawns, an integer 1-3, and
+   * a cell with a card played is represented by the color of that card's owner, either R for red
+   * or B for blue.
+   * @return the textual representation of the board
+   */
   @Override
   public String toString() {
     String output = "";

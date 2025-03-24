@@ -30,7 +30,7 @@ public class StrategyMaximizeRowScore implements PawnsBoardStrategy {
       if (board.getRowScore(player, r) <= board.getRowScore(other, r)) {
         for (int c = 0; c < board.getCols(); c++) {
           for (int i = 0; i < board.getHand(player).size(); i++) {
-            if (board.isMoveValid(r, c, i)) {
+            if (board.isMoveValid(r, c, i, player)) {
               int value = board.getHand(player).get(i).getValue();
               if (board.getRowScore(player, r) + value > board.getRowScore(other, r)) {
                 return new Move(r, c, i);
