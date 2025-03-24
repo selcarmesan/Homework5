@@ -1,9 +1,26 @@
-This codebase functions as a playable game and view for a card game called Pawns Board.
+# Table of Contents
+1. [Summary](#Summary)
+2. [Installation](#Installation)
+3. [Quick Start](#Quick-Start)
+4. [Components](#Components)
+5. [Source Organization](#Organization)
 
-To use this code, run the main file, or alternatively create a new PawnsBoardGame(rows, cols),
-and startGame() using a method that takes in lists for the decks, intended to be supplied with the
-generated lists returned from PawnsCardReader.
 
+## Summary:
+This project Pawns Board functions as a playable version of a card game.  This is a
+two-player game played on a board in which each play takes turns placing a card which influences the
+grid, and continues until both players do not or can not place a card consecutively.
+
+## Installation:
+Clone the repository 'git clone https://github.com/selcarmesan/Pawns-Board/'
+Navigate to the directory and ensure dependencies are install (OpenJDK 20.0.1)
+
+## Quick-Start:
+For project usage either use implementations of PawnsBoard to manually play
+i.e. new PawnsBoardGame(2, 3).startGame();
+Alternatively, run a functional and completed controller file.
+
+## Components:
 This game consists of two major portions, the model, controller, and view.  The model acts as the
 design for the game itself, as well as the components of it, being the players available,
 red & blue, the cards used for making moves as a player, and the cells that the board consists of.
@@ -32,22 +49,26 @@ in that row.
 The main class tests the functionality of the game. It runs a predetermined game of pawns board,
 playing each move with the game class and displaying using the view.
 
+## Organization:
 All objects related to the model of the game can be found within the model package.
 The class that reads from a file and converts it into a list of cards is in the controller package.
 The view package contains the available view for the model, a textual representation.
 The main class is placed in pawns board package outside of model and view.
 The docs folder contains the default supplied deck config files.
 
-CLASS INVARIANT:  If the game is started, then the current turn is either RED or BLUE, never null
+\
+\
+Specified Invariant:
+If the game is started, then the current turn is either RED or BLUE, never null
 is a logical if then statement.  Can be checked at any time.  Is ensured by the constructor,
 as the game is not yet started, and the startGame method changes the player to RED before
 starting the game.  From there on the only method that changes currentTurn is swapTurn, which
 either changes it to RED or BLUE, neither null again.
 
+Homework 6 Changelog:
 
-CHANGES FOR PART TWO:
-Separated PlaceCard and IsMoveValid into two distinct methods rather than only containing placeCard.
-Changed the PawnsCard implementation and Card interface to no longer have a specified color.
-Changed the Cell and Board to no longer be generic.
-Changed the overload for getScore to be two separate methods, getTotalScore and getRowScore.
-Changed PawnsCardReader to only allow for reading from a specified file, rather than a default.
+- Separated PlaceCard and IsMoveValid into two distinct methods rather than only containing placeCard.
+- Changed the PawnsCard implementation and Card interface to no longer have a specified color.
+- Changed the Cell and Board to no longer be generic.
+- Changed the overload for getScore to be two separate methods, getTotalScore and getRowScore.
+- Changed PawnsCardReader to only allow for reading from a specified file, rather than a default.
