@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-// CLASS INVARIANT:  If the game is started, then the current turn is either RED or BLUE, never null
-// Is a logical if then statement.  Can be checked at any time.  Is ensured by the constructor,
-// as the game is not yet started, and the startGame method changes the player to RED before
-// starting the game.  From there on the only method that changes currentTurn is swapTurn, which
-// either changes it to RED or BLUE, neither null again.
 /**
  * A game of pawns board.  The game begins with an empty board of specified dimensions, with the
  * restrictions being that the board is rectangular, with a positive number of rows, and an odd

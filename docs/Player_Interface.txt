@@ -10,6 +10,8 @@ player had per row (although this could be considered part of the board display)
 account for score cancellation, along with the total score for both players above the board.
 It would also say the current turn, as well as the last move that was played.
 
+This would sum into a few methods.  The first being chooseCard, which saves the selected card 
+
 The reasoning behind this is that most of these pieces are required to allow the user/player to
 interact with the controller at the simplest level needed to play the game.  The board and hand
 are needed to see the current state of the game and plan which moves to make, as well as make the

@@ -9,18 +9,6 @@ import cs3500.pawnsboard.model.Player;
  */
 public interface PawnsBoardStrategy {
 
-  class Move {
-    int row;
-    int col;
-    int handIndex;
-
-    Move(int row, int col, int handIndex) {
-      this.row = row;
-      this.col = col;
-      this.handIndex = handIndex;
-    }
-  }
-
   /**
    * Returns a move to be made given this class' strategy.  A move contains the row, col, and hand
    * id of the card to be played for the given player.

@@ -19,8 +19,8 @@ public class StrategyFillFirst implements PawnsBoardStrategy {
    */
   @Override
   public Move choosePlay(PawnsBoardReadOnly board, Player player) throws IllegalStateException {
-    for (int c = 0; c < board.getCols(); c++) {
-      for (int r = 0; r < board.getRows(); r++) {
+    for (int r = 0; r < board.getRows(); r++) {
+      for (int c = 0; c < board.getCols(); c++) {
         for (int i = 0; i < board.getHand(player).size(); i++) {
           if (board.isMoveValid(r, c, i)) {
             return new Move(r, c, i);

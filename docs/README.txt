@@ -38,6 +38,12 @@ The view package contains the available view for the model, a textual representa
 The main class is placed in pawns board package outside of model and view.
 The docs folder contains the default supplied deck config files.
 
+CLASS INVARIANT:  If the game is started, then the current turn is either RED or BLUE, never null
+is a logical if then statement.  Can be checked at any time.  Is ensured by the constructor,
+as the game is not yet started, and the startGame method changes the player to RED before
+starting the game.  From there on the only method that changes currentTurn is swapTurn, which
+either changes it to RED or BLUE, neither null again.
+
 
 CHANGES FOR PART TWO:
 Separated PlaceCard and IsMoveValid into two distinct methods rather than only containing placeCard.
