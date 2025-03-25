@@ -18,6 +18,7 @@ Navigate to the directory and ensure dependencies are install (OpenJDK 20.0.1)
 ## Quick-Start:
 For project usage either use implementations of PawnsBoard to manually play
 i.e. new PawnsBoardGame(2, 3).startGame();
+
 Alternatively, run the .jar file, making sure the supporting docs containing the config files in 
 the same folder.
 
