@@ -1,9 +1,9 @@
 package cs3500.pawnsboard.view;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import cs3500.pawnsboard.model.PawnsBoard;
+import cs3500.pawnsboard.model.PawnsBoardReadOnly;
 import cs3500.pawnsboard.model.Player;
 
 /**
@@ -11,7 +11,7 @@ import cs3500.pawnsboard.model.Player;
  */
 public class PawnsBoardTextualView implements PawnsBoardView {
 
-  private final PawnsBoard model;
+  private final PawnsBoardReadOnly model;
 
   /**
    * Constructs a PawnsBoardTextualView from a given PawnsBoard model.
@@ -29,27 +29,12 @@ public class PawnsBoardTextualView implements PawnsBoardView {
    * Gets the model of the textual view.
    * @return model
    */
-  public PawnsBoard getModel() {
+  public PawnsBoardReadOnly getModel() {
     return model;
   }
 
-  /**
-   * Renders a model in some manner (e.g. as text, or as graphics, etc.)
-   * to the given appendable.
-   * @throws IllegalArgumentException if append is null
-   * @throws IOException if the rendering fails for some reason
-   */
   @Override
-  public void render(Appendable append) throws IOException {
-    if (Objects.isNull(append)) {
-      throw new IllegalArgumentException("Appendable is Null");
-    }
-    try {
-      append.append(this.toString());
-    } catch (IOException e) {
-      throw new IOException(e.getMessage());
-    }
-  }
+  public void update() {}
 
   /**
    * Returns the current board and game status as a textual representation.  Each line has two

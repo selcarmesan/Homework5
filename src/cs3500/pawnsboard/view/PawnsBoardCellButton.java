@@ -1,0 +1,80 @@
+package cs3500.pawnsboard.view;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Objects;
+
+import javax.swing.*;
+
+import cs3500.pawnsboard.model.Cell;
+import cs3500.pawnsboard.model.CellReadOnly;
+import cs3500.pawnsboard.model.Player;
+
+public class PawnsBoardCellButton extends JButton implements PawnsBoardButton, ActionListener {
+
+  private final int row;
+  private final int col;
+  private final CellReadOnly cell;
+
+  public PawnsBoardCellButton(int row, int col, CellReadOnly cell) {
+    this.row = row;
+    this.col = col;
+    this.cell = cell;
+    this.setForeground(Color.WHITE);
+    this.setFont(new Font("Arial", Font.BOLD, 18));
+    this.setOpaque(true);
+    this.setHorizontalAlignment(JLabel.CENTER);
+    this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    this.setFocusable(false);
+    this.addActionListener(this);
+    if (Objects.isNull(this.cell.getOwner())) {
+      this.setBackground(Color.GRAY);
+    } else if (this.cell.getOwner().equals(Player.RED)) {
+      this.setBackground(Color.RED);
+    } else if (this.cell.getOwner().equals(Player.BLUE)) {
+      this.setBackground(Color.BLUE);
+    }
+    String value;
+    if (!Objects.isNull(this.cell.getCard())) {
+      value = String.format("%s", this.cell.getCard().getValue());
+      this.setText(value);
+    } else if (this.cell.getPawns() != 0) {
+      this.setBackground(Color.GRAY);
+      value = String.format("%s", this.cell.getPawns());
+      this.setText(value);
+    }
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == this) {
+      System.out.println("Row: " + row + ", Col: " + col);
+      if (!this.getBackground().equals(Color.CYAN)) {
+        this.setBackground(Color.CYAN);
+      } else {
+        if (Objects.isNull(this.cell.getOwner())) {
+          this.setBackground(Color.GRAY);
+        } else if (this.cell.getOwner().equals(Player.RED)) {
+          this.setBackground(Color.RED);
+        } else if (this.cell.getOwner().equals(Player.BLUE)) {
+          this.setBackground(Color.BLUE);
+        }
+        if (Objects.isNull(this.cell.getCard())) {
+          this.setBackground(Color.GRAY);
+        }
+      }
+
+    }
+  }
+
+  @Override
+  public int getRow() {
+    return row;
+  }
+
+  @Override
+  public int getCol() {
+    return col;
+  }
+}

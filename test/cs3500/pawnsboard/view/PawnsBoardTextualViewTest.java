@@ -73,56 +73,6 @@ public class PawnsBoardTextualViewTest {
   }
 
   @Test
-  public void testRender() {
-    Appendable ap = new StringBuilder();
-    PawnsBoardView view = new PawnsBoardTextualView(board);
-    board.startGame(redConfigDeck, blueConfigDeck, 1, false);
-
-    //Null Appendable
-    assertThrows("Appendable is Null", IllegalArgumentException.class,
-        () -> view.render(null)
-    );
-
-    //Render Properly
-    try {
-      view.render(ap);
-      assertEquals(view.toString(), ap.toString());
-    } catch (Exception e) {
-      throw new IllegalStateException("Failed To Render");
-    }
-  }
-
-  @Test
-  public void testRenderIOException() {
-    PawnsBoardView view = new PawnsBoardTextualView(board);
-    board.startGame(redConfigDeck, blueConfigDeck, 1, false);
-
-    class FailingAppendable implements Appendable {
-      @Override
-      public Appendable append(CharSequence csq) throws IOException {
-        throw new IOException("IOException");
-      }
-
-      @Override
-      public Appendable append(CharSequence csq, int start, int end) throws IOException {
-        throw new IOException("IOException");
-      }
-
-      @Override
-      public Appendable append(char c) throws IOException {
-        throw new IOException("IOException");
-      }
-    }
-
-    Appendable ap = new FailingAppendable();
-
-    //IOException
-    assertThrows("IOException", IOException.class,
-        () -> view.render(ap)
-    );
-  }
-
-  @Test
   public void testToStringEmpty() {
     board.startGame(redCards, blueCards, 1, false);
     PawnsBoardView view = new PawnsBoardTextualView(board);

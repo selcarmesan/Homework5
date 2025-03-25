@@ -9,6 +9,7 @@ import cs3500.pawnsboard.controller.PawnsCardReader;
 import cs3500.pawnsboard.model.Player;
 import cs3500.pawnsboard.view.PawnsBoardTextualView;
 import cs3500.pawnsboard.view.PawnsBoardView;
+import cs3500.pawnsboard.view.PawnsBoardVisualView;
 
 /**
  * PawnsBoard creates a new game of PawnsBoardGame and plays till it is completed.
@@ -31,6 +32,9 @@ public class PawnsBoardGame {
 
     //Initializing PawnsBoardTextualView
     PawnsBoardView view = new PawnsBoardTextualView(game);
+
+    //Initializing the GUI
+    PawnsBoardVisualView visualView = new PawnsBoardVisualView(game);
 
     //One Full Game of PawnsBoardGame
     game.placeCard(0, 0, 2);
@@ -73,6 +77,8 @@ public class PawnsBoardGame {
     System.out.println(view);
     game.skipTurn();
     System.out.println(view);
+
+    visualView.update();
 
     //Check If Game is Over
     System.out.println(game.isGameOver());
