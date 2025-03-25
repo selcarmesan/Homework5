@@ -1,14 +1,20 @@
 package cs3500.pawnsboard.view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 
 import cs3500.pawnsboard.model.Card;
 import cs3500.pawnsboard.model.Player;
 
+/**
+ * PawnsBoardCardPanel implements PawnsBoardPanel and creates a JPanel to display a card.
+ */
 public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, MouseListener {
 
   private Card card;
@@ -16,6 +22,19 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
   private Player player;
   private PawnsBoardVisualView view;
 
+  /**
+   * Creates a new PawnsBoardCardPanel displaying all the information from the given card.
+   * The panel keeps track of the card and index.
+   * The size and location is also given.
+   * @param card card
+   * @param player player
+   * @param x x position
+   * @param y y position
+   * @param width width of the panel
+   * @param height height of the panel
+   * @param index index of the card
+   * @param view parent view
+   */
   public PawnsBoardCardPanel(Card card, Player player, int x, int y, int width,
                              int height, int index, PawnsBoardVisualView view) {
     this.card = card;
@@ -31,7 +50,6 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
     this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     this.setLayout(null);
     this.addMouseListener(this);
-
     JLabel cardDescription = new JLabel();
     cardDescription.setForeground(Color.WHITE);
     cardDescription.setFont(new Font("Arial", Font.BOLD, 18));
@@ -76,12 +94,6 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
     System.out.println("Player: " + player + ", Index: " + index);
     if (!this.getBackground().equals(Color.CYAN)) {
       this.setBackground(Color.CYAN);
-    } else {
-      if (player.equals(Player.RED)) {
-        this.setBackground(Color.RED);
-      } else {
-        this.setBackground(Color.BLUE);
-      }
     }
     view.setLastChosenCard(this);
   }

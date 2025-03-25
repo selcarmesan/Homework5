@@ -1,25 +1,30 @@
 package cs3500.pawnsboard.view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.Objects;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.BorderFactory;
 
 import cs3500.pawnsboard.model.Card;
 import cs3500.pawnsboard.model.PawnsBoardReadOnly;
 import cs3500.pawnsboard.model.Player;
 
 /**
- * A simple graphical interface for a game of pawnsboard.
+ * A simple graphical interface for a game of PawnsBoard.
  */
 public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, KeyListener {
 
   PawnsBoardReadOnly model;
-  private final int width;
-  private final int height;
+  private int width;
+  private int height;
   private PawnsBoardCellButton lastChosenCell;
   private PawnsBoardCardPanel lastChosenCard;
 
@@ -40,9 +45,18 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
     this.height = this.getHeight();
     this.model = model;
     this.setLayout(null);
-    this.setResizable(false);
+    //this.setResizable(false);
     this.setVisible(true);
     this.addKeyListener(this);
+    this.addComponentListener(new ComponentAdapter() {
+      @Override
+      public void componentResized(ComponentEvent e) {
+        width = getWidth();
+        height = getHeight();
+        update();
+      }
+    });
+    this.setTitle(String.format("Player: %s", model.getCurrentTurn()));
     lastChosenCell = null;
     lastChosenCard = null;
     generateBoard();
@@ -51,6 +65,9 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
 
   @Override
   public void update() {
+    //Update the title
+    this.setTitle(String.format("Player: %s", model.getCurrentTurn()));
+
     //Remove Previous Board
     this.getContentPane().removeAll();
 
@@ -162,7 +179,6 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
       } else {
         lastChosenCard.setBackground(Color.BLUE);
       }
-      setLastChosenCell(null);
       lastChosenCard = null;
     } else {
       if (lastChosenCard.getPlayer().equals(Player.RED)) {
@@ -170,7 +186,6 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
       } else {
         lastChosenCard.setBackground(Color.BLUE);
       }
-      setLastChosenCell(null);
       lastChosenCard = card;
     }
   }

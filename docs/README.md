@@ -22,6 +22,8 @@ i.e. new PawnsBoardGame(2, 3).startGame();
 Alternatively, run the .jar file, making sure the supporting docs containing the config files in 
 the same folder.
 
+Keyboard input to confirm is the enter key and the input to pass is the space bar.
+
 ## Components:
 This game consists of two major portions, the model, controller, and view.  The model acts as the
 design for the game itself, as well as the components of it, being the players available,

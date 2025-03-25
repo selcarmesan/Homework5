@@ -1,16 +1,22 @@
 package cs3500.pawnsboard.view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 
-import cs3500.pawnsboard.model.Cell;
 import cs3500.pawnsboard.model.CellReadOnly;
 import cs3500.pawnsboard.model.Player;
 
+/**
+ * The PawnsBoardCellButton implements PawnsBoardButton and constructs JButton to represent a cell
+ * in a PawnsBoardGame.
+ */
 public class PawnsBoardCellButton extends JButton implements PawnsBoardButton, ActionListener {
 
   private final int row;
@@ -18,6 +24,15 @@ public class PawnsBoardCellButton extends JButton implements PawnsBoardButton, A
   private final CellReadOnly cell;
   private PawnsBoardVisualView view;
 
+  /**
+   * Creates a new PawnsBoardCellButton from the given cell.
+   * The information about the cell is graphically represented.
+   * It also holds information regarding the cells row and col.
+   * @param row row of the cell
+   * @param col col of the cell
+   * @param cell cell
+   * @param view parent view
+   */
   public PawnsBoardCellButton(int row, int col, CellReadOnly cell, PawnsBoardVisualView view) {
     this.row = row;
     this.col = col;

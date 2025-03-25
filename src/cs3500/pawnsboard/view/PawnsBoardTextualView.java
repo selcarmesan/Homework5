@@ -2,7 +2,6 @@ package cs3500.pawnsboard.view;
 
 import java.util.Objects;
 
-import cs3500.pawnsboard.model.PawnsBoard;
 import cs3500.pawnsboard.model.PawnsBoardReadOnly;
 import cs3500.pawnsboard.model.Player;
 
