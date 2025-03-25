@@ -71,8 +71,14 @@ either changes it to RED or BLUE, neither null again.
 
 Homework 6 Changelog:
 
-- Separated PlaceCard and IsMoveValid into two distinct methods rather than only containing placeCard.
+- Separated PlaceCard and IsMoveValid into two distinct methods rather than only containing 
+placeCard.  This is so the view can check validity other than only when attempting to place a card.
 - Changed the PawnsCard implementation and Card interface to no longer have a specified color.
-- Changed the Cell and Board to no longer be generic.
+This is due to it being a redundant field.
+- Changed the Cell and Board to no longer be generic.  There is no need for generics when there is 
+only a singular planned implementation.
 - Changed the overload for getScore to be two separate methods, getTotalScore and getRowScore.
-- Changed PawnsCardReader to only allow for reading from a specified file, rather than a default.
+This is because they had slightly different purposes, so it was poor design to overload the same 
+function to achieve this.
+- Changed PawnsCardReader to only allow for reading from a specified file, rather than a default.  
+This is to fix a misread on the instructions within the previous assignment.
