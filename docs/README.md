@@ -12,7 +12,7 @@ two-player game played on a board in which each play takes turns placing a card 
 grid, and continues until both players do not or can not place a card consecutively.
 
 ## Installation:
-Clone the repository 'git clone https://github.com/selcarmesan/Pawns-Board/'
+Clone the repository 'git clone https://github.com/selcarmesan/Pawns-Board/' \
 Navigate to the directory and ensure dependencies are install (OpenJDK 20.0.1)
 
 ## Quick-Start:
