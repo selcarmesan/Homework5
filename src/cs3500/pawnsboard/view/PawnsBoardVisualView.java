@@ -81,7 +81,7 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
   }
 
   /**
-   * Generates a board taking in the current state of
+   * Generates a board, taking in the current state of the model.
    */
   private void generateBoard() {
     int numRow = model.getRows();
@@ -202,7 +202,7 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
 
   @Override
   public void keyTyped(KeyEvent e) {
-
+    // Placeholder
   }
 
   @Override
@@ -216,6 +216,6 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
 
   @Override
   public void keyReleased(KeyEvent e) {
-
+    // Placeholder
   }
 }

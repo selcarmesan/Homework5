@@ -6,7 +6,6 @@ import org.junit.Test;
 import cs3500.pawnsboard.model.mocks.MockBoardChecking;
 import cs3500.pawnsboard.model.mocks.MockBoardOneValid;
 import cs3500.pawnsboard.model.mocks.MockBoardRowScore;
-import cs3500.pawnsboard.model.mocks.MockBoardTranscript;
 import cs3500.pawnsboard.model.strategies.Move;
 import cs3500.pawnsboard.model.strategies.PawnsBoardStrategy;
 import cs3500.pawnsboard.model.strategies.StrategyFillFirst;

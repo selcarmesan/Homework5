@@ -4,7 +4,7 @@ package cs3500.pawnsboard.view;
  * Interface for a visual representation of PawnsBoardGame.
  * Extends PawnsBoardView.
  */
-public interface PawnsBoardVisual extends PawnsBoardView{
+public interface PawnsBoardVisual extends PawnsBoardView {
 
   /**
    * Sets the last cell chosen by the user with the given cell.

@@ -33,7 +33,9 @@ public class PawnsBoardTextualView implements PawnsBoardView {
   }
 
   @Override
-  public void update() {}
+  public void update() {
+    // Unused
+  }
 
   /**
    * Returns the current board and game status as a textual representation.  Each line has two

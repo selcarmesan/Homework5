@@ -17,10 +17,10 @@ import cs3500.pawnsboard.model.Player;
  */
 public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, MouseListener {
 
-  private Card card;
-  private int index;
-  private Player player;
-  private PawnsBoardVisualView view;
+  // private Card card;
+  private final int index;
+  private final Player player;
+  private final PawnsBoardVisualView view;
 
   /**
    * Creates a new PawnsBoardCardPanel displaying all the information from the given card.
@@ -37,7 +37,7 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
    */
   public PawnsBoardCardPanel(Card card, Player player, int x, int y, int width,
                              int height, int index, PawnsBoardVisualView view) {
-    this.card = card;
+    // this.card = card;
     this.player = player;
     this.index = index;
     this.view = view;
@@ -59,8 +59,8 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
     cardDescription.setVerticalAlignment(JLabel.TOP);
     this.add(cardDescription);
 
-    int sizeX = width/7;
-    int sizeY = height/9;
+    int sizeX = width / 7;
+    int sizeY = height / 9;
     for (int row = 0; row < 5; row++) {
       for (int col = 0; col < 5; col++) {
         JLabel influence = new JLabel();
@@ -100,21 +100,21 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
 
   @Override
   public void mousePressed(MouseEvent e) {
-
+    // Placeholder
   }
 
   @Override
   public void mouseReleased(MouseEvent e) {
-
+    // Placeholder
   }
 
   @Override
   public void mouseEntered(MouseEvent e) {
-
+    // Placeholder
   }
 
   @Override
   public void mouseExited(MouseEvent e) {
-
+    // Placeholder
   }
 }
