@@ -73,7 +73,7 @@ either changes it to RED or BLUE, neither null again.
 
 Homework 6 Changelog:
 
-- Separated PlaceCard and IsMoveValid into two distinct methods rather than only containing 
+- Separated placeCard and isMoveValid into two distinct methods rather than only containing 
 placeCard.  This is so the view can check validity other than only when attempting to place a card.
 - Changed the PawnsCard implementation and Card interface to no longer have a specified color.
 This is due to it being a redundant field.
