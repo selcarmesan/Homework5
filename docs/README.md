@@ -56,10 +56,10 @@ The main class tests the functionality of the game. It runs a predetermined game
 playing each move with the game class and displaying using the view.
 
 ## Organization:
-All objects related to the model of the game can be found within the model package.
-The class that reads from a file and converts it into a list of cards is in the controller package.
-The view package contains the available views for the model, a textual representation and a GUI.
-The main class is placed in pawns board package outside of model and view.
+All objects related to the model of the game can be found within the model package. \
+The class that reads from a file and converts it into a list of cards is in the controller package.\
+The view package contains the available views for the model, a textual representation and a GUI.\
+The main class is placed in pawns board package outside of model and view.\
 The docs folder contains the default supplied deck config files.
 
 \
