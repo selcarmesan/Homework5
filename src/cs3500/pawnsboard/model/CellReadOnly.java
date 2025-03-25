@@ -1,5 +1,8 @@
 package cs3500.pawnsboard.model;
 
+/**
+ * The readable components for a cell within the board during a game of pawns board.
+ */
 public interface CellReadOnly {
 
   /**

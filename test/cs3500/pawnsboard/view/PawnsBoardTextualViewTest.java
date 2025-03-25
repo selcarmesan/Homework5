@@ -126,8 +126,8 @@ public class PawnsBoardTextualViewTest {
   public void testToStringEmpty() {
     board.startGame(redCards, blueCards, 1, false);
     PawnsBoardView view = new PawnsBoardTextualView(board);
-    String emptyExpected = "0 1_1 0\n" +
-            "0 1_1 0\n";
+    String emptyExpected = "0 1_1 0\n"
+            + "0 1_1 0\n";
     assertEquals(emptyExpected, view.toString());
   }
 
@@ -136,12 +136,12 @@ public class PawnsBoardTextualViewTest {
     board.startGame(redCards, blueCards, 1, false);
     PawnsBoardView view = new PawnsBoardTextualView(board);
     board.placeCard(0, 0, 0);
-    String cardExpected = "1 R_1 0\n" +
-            "0 1_1 0\n";
+    String cardExpected = "1 R_1 0\n"
+            + "0 1_1 0\n";
     assertEquals(cardExpected, view.toString());
     board.placeCard(1, 2, 0);
-    cardExpected = "1 R_1 0\n" +
-            "0 1_B 1\n";
+    cardExpected = "1 R_1 0\n"
+            + "0 1_B 1\n";
     assertEquals(cardExpected, view.toString());
   }
 }

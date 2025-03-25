@@ -39,7 +39,9 @@ public class StrategyTest {
     model = new MockBoardChecking(sb);
     try {
       fillFirst.choosePlay(model, Player.RED);
-    } catch (Exception ignored) {}
+    } catch (Exception ignored) {
+
+    }
     for (int i = 0; i < model.getRows(); i++) {
       for (int j = 0; j < model.getCols(); j++) {
         for (int k = 0; k < model.getHand(Player.RED).size(); k++) {
@@ -88,7 +90,9 @@ public class StrategyTest {
     model = new MockBoardOneValid(sb);
     try {
       maxRowScore.choosePlay(model, Player.RED);
-    } catch (Exception ignored) {}
+    } catch (Exception ignored) {
+
+    }
     for (int i = 0; i < model.getRows(); i++) {
       for (int j = 0; j < model.getCols(); j++) {
         for (int k = 0; k < model.getHand(Player.RED).size(); k++) {
@@ -120,13 +124,5 @@ public class StrategyTest {
     assertTrue(sb.toString().contains("Checked move: 2, 0, 1"));
     assertFalse(sb.toString().contains("Checked move: 2, 0, 2"));
     assertFalse(sb.toString().contains("Checked move: 2, 2, 0"));
-  }
-
-  @Test
-  public void testTranscript() {
-    PawnsBoard game = new MockBoardTranscript(sb);
-    game.startGame(null, null, 0, false);
-    maxRowScore.choosePlay(game, Player.RED);
-    System.out.println(sb.toString());
   }
 }

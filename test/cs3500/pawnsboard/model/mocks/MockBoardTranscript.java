@@ -219,7 +219,7 @@ public class MockBoardTranscript implements PawnsBoard {
    */
   @Override
   public void placeCard(int row, int col, int handId) {
-
+    board.placeCard(row, col, handId);
   }
 
   /**
@@ -229,6 +229,6 @@ public class MockBoardTranscript implements PawnsBoard {
    */
   @Override
   public void skipTurn() {
-
+    board.skipTurn();
   }
 }
