@@ -18,7 +18,7 @@ public class PawnsBoardTextualView implements PawnsBoardView {
    *
    * @param model PawnsBoard model
    */
-  public PawnsBoardTextualView(PawnsBoard model) {
+  public PawnsBoardTextualView(PawnsBoardReadOnly model) {
     if (Objects.isNull(model)) {
       throw new IllegalArgumentException("Invalid Model");
     }

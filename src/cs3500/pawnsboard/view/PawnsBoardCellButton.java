@@ -16,12 +16,13 @@ public class PawnsBoardCellButton extends JButton implements PawnsBoardButton, A
   private final int row;
   private final int col;
   private final CellReadOnly cell;
+  private PawnsBoardVisualView view;
 
-  public PawnsBoardCellButton(int row, int col, CellReadOnly cell) {
+  public PawnsBoardCellButton(int row, int col, CellReadOnly cell, PawnsBoardVisualView view) {
     this.row = row;
     this.col = col;
     this.cell = cell;
-    this.setForeground(Color.WHITE);
+    this.view = view;
     this.setFont(new Font("Arial", Font.BOLD, 18));
     this.setOpaque(true);
     this.setHorizontalAlignment(JLabel.CENTER);
@@ -32,11 +33,14 @@ public class PawnsBoardCellButton extends JButton implements PawnsBoardButton, A
       this.setBackground(Color.GRAY);
     } else if (this.cell.getOwner().equals(Player.RED)) {
       this.setBackground(Color.RED);
+      this.setForeground(Color.RED);
     } else if (this.cell.getOwner().equals(Player.BLUE)) {
       this.setBackground(Color.BLUE);
+      this.setForeground(Color.BLUE);
     }
     String value;
     if (!Objects.isNull(this.cell.getCard())) {
+      this.setForeground(Color.WHITE);
       value = String.format("%s", this.cell.getCard().getValue());
       this.setText(value);
     } else if (this.cell.getPawns() != 0) {
@@ -52,19 +56,8 @@ public class PawnsBoardCellButton extends JButton implements PawnsBoardButton, A
       System.out.println("Row: " + row + ", Col: " + col);
       if (!this.getBackground().equals(Color.CYAN)) {
         this.setBackground(Color.CYAN);
-      } else {
-        if (Objects.isNull(this.cell.getOwner())) {
-          this.setBackground(Color.GRAY);
-        } else if (this.cell.getOwner().equals(Player.RED)) {
-          this.setBackground(Color.RED);
-        } else if (this.cell.getOwner().equals(Player.BLUE)) {
-          this.setBackground(Color.BLUE);
-        }
-        if (Objects.isNull(this.cell.getCard())) {
-          this.setBackground(Color.GRAY);
-        }
       }
-
+      view.setLastChosenCell(this);
     }
   }
 
@@ -76,5 +69,10 @@ public class PawnsBoardCellButton extends JButton implements PawnsBoardButton, A
   @Override
   public int getCol() {
     return col;
+  }
+
+  @Override
+  public CellReadOnly getCell() {
+    return cell;
   }
 }

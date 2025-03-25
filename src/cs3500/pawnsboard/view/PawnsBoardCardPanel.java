@@ -14,11 +14,14 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
   private Card card;
   private int index;
   private Player player;
+  private PawnsBoardVisualView view;
 
-  public PawnsBoardCardPanel(Card card, Player player, int x, int y, int width, int height, int index) {
+  public PawnsBoardCardPanel(Card card, Player player, int x, int y, int width,
+                             int height, int index, PawnsBoardVisualView view) {
     this.card = card;
     this.player = player;
     this.index = index;
+    this.view = view;
     if (this.player.equals(Player.RED)) {
       this.setBackground(Color.RED);
     } else {
@@ -32,7 +35,7 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
     JLabel cardDescription = new JLabel();
     cardDescription.setForeground(Color.WHITE);
     cardDescription.setFont(new Font("Arial", Font.BOLD, 18));
-    cardDescription.setText(String.format("%s\nCost: %s\nValue: %s",
+    cardDescription.setText(String.format("%s, Cost: %s, Value: %s",
             card.getName(), card.getCost(), card.getValue()));
     cardDescription.setBounds(0,0, width, height);
     cardDescription.setVerticalAlignment(JLabel.TOP);
@@ -59,8 +62,13 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
   }
 
   @Override
-  public void getPanel() {
+  public Player getPlayer() {
+    return player;
+  }
 
+  @Override
+  public int getIndex() {
+    return index;
   }
 
   @Override
@@ -75,6 +83,7 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
         this.setBackground(Color.BLUE);
       }
     }
+    view.setLastChosenCard(this);
   }
 
   @Override
