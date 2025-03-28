@@ -1,0 +1,32 @@
+package cs3500.pawnsboard.view;
+
+/**
+ * Interface for a visual representation of PawnsBoardGame.
+ * Extends PawnsBoardView.
+ */
+public interface PawnsBoardVisual extends PawnsBoardView {
+
+  /**
+   * Sets the last cell chosen by the user with the given cell.
+   * @param cell last chosen cell
+   */
+  void setLastChosenCell(PawnsBoardCellButton cell);
+
+  /**
+   * Sets the last card chosen by the user with the given card.
+   * @param card last chosen card
+   */
+  void setLastChosenCard(PawnsBoardCardPanel card);
+
+  /**
+   * Gets the last cell chosen by the user.
+   * @return lastChosenCell
+   */
+  PawnsBoardCellButton getLastChosenCell();
+
+  /**
+   * Gets the last card chosen by the user.
+   * @return lastChosenCard
+   */
+  PawnsBoardCardPanel getLastChosenCard();
+}
